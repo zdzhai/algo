@@ -1,6 +1,8 @@
 package com.yugutou.charpter1_linklist.level2.topic2_5删除元素;
 
 
+import com.yugutou.charpter1_linklist.level2.topic2_5删除元素.DeletePoint.ListNode;
+
 public class DeletePoint {
     /**
      * 删除给定的结点
@@ -43,9 +45,9 @@ public class DeletePoint {
      * @return
      */
     public static ListNode removeElements(ListNode head, int val) {
-        ListNode dummyHead = new ListNode(0);
-        dummyHead.next = head;
-        ListNode temp = dummyHead;
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode temp = dummyNode;
         while (temp.next != null) {
             if (temp.next.val == val) {
                 temp.next = temp.next.next;
@@ -53,7 +55,7 @@ public class DeletePoint {
                 temp = temp.next;
             }
         }
-        return dummyHead.next;
+        return dummyNode.next;
     }
 
     /**

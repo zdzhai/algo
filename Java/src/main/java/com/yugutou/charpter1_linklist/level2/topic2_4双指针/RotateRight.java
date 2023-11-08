@@ -2,13 +2,14 @@ package com.yugutou.charpter1_linklist.level2.topic2_4双指针;
 
 /**
  * Leetcode61.旋转数组
+ * 先找到链表的倒数第k个节点，再把后续的节点接在链表头部
  */
 public class RotateRight {
 
     public static void main(String[] args) {
-        int[] a = {1, 2, 3, 4, 5};
+        int[] a = {1};
         ListNode nodeA = initLinkedList(a);
-        ListNode node = rotateRight(nodeA, 2);
+        ListNode node = rotateRight(nodeA, 0);
         System.out.println(toString(node));
     }
 
@@ -16,29 +17,36 @@ public class RotateRight {
         if (head == null || k == 0) {
             return head;
         }
-        ListNode temp = head;
-        ListNode fast = head;
-        ListNode slow = head;
-        int len = 0;
-        while (head != null) {
-            head = head.next;
-            len++;
-        }
-        if (k % len == 0) {
-            return temp;
-        }
-        while ((k % len) > 0) {
+        ListNode slow = head, fast = head;
+        int size = 0;
+        while (fast != null && k > 0) {
+            fast = fast.next;
+            size++;
             k--;
-            fast = fast.next;
         }
-        while (fast.next != null) {
+        if (k > 0) {
+            k = k % size;
+            fast = head;
+            while (fast != null && k > 0) {
+                fast = fast.next;
+                size++;
+                k--;
+            }
+        }
+        ListNode temp = slow;
+        while (fast != null) {
             fast = fast.next;
+            temp = slow;
             slow = slow.next;
         }
-        ListNode res = slow.next;
-        slow.next = null;
-        fast.next = temp;
-        return res;
+        ListNode head1 = temp.next;
+        temp.next = null;
+        temp = head1;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = head;
+        return head1;
     }
 
     /**

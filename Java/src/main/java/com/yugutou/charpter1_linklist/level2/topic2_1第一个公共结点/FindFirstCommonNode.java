@@ -1,9 +1,6 @@
 package com.yugutou.charpter1_linklist.level2.topic2_1第一个公共结点;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class FindFirstCommonNode {
     public static void main(String[] args) {
@@ -15,7 +12,7 @@ public class FindFirstCommonNode {
 
 
 
-        int testMethod = 1;
+        int testMethod = 3;
         ListNode node = new ListNode(0);
         switch (testMethod) {
             case 1: //方法1：通过Hash辅助查找
@@ -50,21 +47,18 @@ public class FindFirstCommonNode {
         if (pHead1 == null || pHead2 == null) {
             return null;
         }
-        ListNode current1 = pHead1;
-        ListNode current2 = pHead2;
-
-        HashMap<ListNode, Integer> hashMap = new HashMap<ListNode, Integer>();
-        while (current1 != null) {
-            hashMap.put(current1, null);
-            current1 = current1.next;
+        Map<Integer, ListNode> map = new HashMap<>();
+        while (pHead1 != null) {
+            map.put(pHead1.val, pHead1);
+            pHead1 = pHead1.next;
         }
-
-        while (current2 != null) {
-            if (hashMap.containsKey(current2))
-                return current2;
-            current2 = current2.next;
+        while (pHead2 != null) {
+            if (!map.containsKey(pHead2.val)) {
+                pHead2 = pHead2.next;
+            } else {
+                return map.get(pHead2.val);
+            }
         }
-
         return null;
     }
 
@@ -76,16 +70,20 @@ public class FindFirstCommonNode {
      * @return
      */
     public static ListNode findFirstCommonNodeBySet(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
         Set<ListNode> set = new HashSet<>();
         while (headA != null) {
             set.add(headA);
             headA = headA.next;
         }
-
         while (headB != null) {
-            if (set.contains(headB))
+            if (!set.contains(headB)) {
+                headB = headB.next;
+            } else {
                 return headB;
-            headB = headB.next;
+            }
         }
         return null;
     }
@@ -94,8 +92,8 @@ public class FindFirstCommonNode {
      * 方法3：通过栈
      */
     public static ListNode findFirstCommonNodeByStack(ListNode headA, ListNode headB) {
-        Stack<ListNode> stackA = new Stack();
-        Stack<ListNode> stackB = new Stack();
+        Stack<ListNode> stackA = new Stack<>();
+        Stack<ListNode> stackB = new Stack<>();
         while (headA != null) {
             stackA.push(headA);
             headA = headA.next;
@@ -104,17 +102,16 @@ public class FindFirstCommonNode {
             stackB.push(headB);
             headB = headB.next;
         }
-
-        ListNode preNode = null;
-        while (stackB.size() > 0 && stackA.size() > 0) {
+        ListNode resNode = null;
+        while (!stackA.isEmpty() && !stackB.isEmpty()) {
             if (stackA.peek() == stackB.peek()) {
-                preNode = stackA.pop();
+                resNode = stackA.pop();
                 stackB.pop();
             } else {
-                break;
+                return resNode;
             }
         }
-        return preNode;
+        return resNode;
     }
 
     /**

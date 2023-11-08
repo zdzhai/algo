@@ -1,5 +1,14 @@
 package com.yugutou.charpter1_linklist.level2.topic2_3合并有序链表;
 
+/**
+ * 思路：
+ * 1. 建立新链表 逐个比较两个链表节点的值，取小的插入新链表中
+ * 2. 不建立额外链表 直接对链表节点的值进行比较，然后插入链表节点
+ * 如果val1<val2,仍然需要判断val1后边的节点值和val2的关系，
+ * 必须找到val1的下一个值大于等于val2的，才可以插入
+ *
+ * @author zdzhai
+ */
 public class MergeList {
     public static void main(String[] args) {
         int[] a = {1, 5, 8, 12};
@@ -15,7 +24,7 @@ public class MergeList {
         ListNode nodeD = initLinkedList(e);
         System.out.println(middleNode(nodeD).val);
 
-        int testMethod = 2;
+        int testMethod = 4;
         switch (testMethod) {
             case 1://最直接的方法
                 d = mergeTwoLists2(nodeA, nodeB);
@@ -52,37 +61,21 @@ public class MergeList {
      * @return
      */
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        // write code here
-        ListNode newHead = new ListNode(-1);
-        ListNode res = newHead;
-        while (list1 != null || list2 != null) {
-
-            if (list1 != null && list2 != null) {//都不为空的情况
-                if (list1.val < list2.val) {
-                    newHead.next = list1;
-                    list1 = list1.next;
-                } else if (list1.val > list2.val) {
-                    newHead.next = list2;
-                    list2 = list2.next;
-                } else { //相等的情况，分别接两个链
-                    newHead.next = list2;
-                    list2 = list2.next;
-                    newHead = newHead.next;
-                    newHead.next = list1;
-                    list1 = list1.next;
-                }
-                newHead = newHead.next;
-            } else if (list1 != null && list2 == null) {
-                newHead.next = list1;
-                list1 = list1.next;
-                newHead = newHead.next;
-            } else if (list1 == null && list2 != null) {
-                newHead.next = list2;
+        // write code here 建立新链表 逐个比较两个链表节点的值，取小的插入新链表中
+        ListNode preHead = new ListNode(-1);
+        ListNode node = preHead;
+        while (list1 != null && list2 != null) {
+            if (list1.val > list2.val) {
+                node.next = list2;
                 list2 = list2.next;
-                newHead = newHead.next;
+            } else {
+                node.next = list1;
+                list1 = list1.next;
             }
+            node = node.next;
         }
-        return res.next;
+        node.next = list1 == null ? list2 : list1;
+        return preHead.next;
     }
 
 
@@ -197,7 +190,7 @@ public class MergeList {
     public static ListNode mergeKLists(ListNode[] lists) {
         ListNode res = null;
         for (ListNode list : lists) {
-            res = mergeTwoListsMoreSimple(res, list);
+            res = mergeTwoLists(res, list);
         }
         return res;
     }

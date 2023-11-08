@@ -5,8 +5,20 @@ import java.util.Stack;
 /***
  * 判断链表是否回文
  */
+
+/**
+ * 思路：
+ * 1. 双指针前后指针 但是取到后指针本身就已经O(n)，忽略常数依然时O(n)
+ * 2. 快慢（1，2）指针找到中间节点，可以满足O(n)
+ * 3. 队列，左右同时出队列
+ * 4. 数组同理，遍历一遍放到数组，然后双指针
+ *
+ * 5. 栈，压栈后出栈并和链表中的元素相比较，只要不一致就false
+ * 6. 优化5.全部压栈，只比较栈和链表中一半的元素
+ * 7. 反转链表 构建新链表对原链表节点进行反转，反转一半后，进行逐个对比
+ * @author zdzhai
+ */
 public class IsPalindromic {
-    static ListNode temp;
 
     public static void main(String[] args) {
         int[] a = {1, 2, 3, 4, 4, 3, 2, 1};
@@ -42,17 +54,16 @@ public class IsPalindromic {
         if (head == null || head.next == null) {
             return true;
         }
-        ListNode slow = head, fast = head;
-        ListNode pre = head, prepre = null;
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode pre = head;
+        ListNode prePre = null;
         while (fast != null && fast.next != null) {
             pre = slow;
             slow = slow.next;
             fast = fast.next.next;
-            pre.next = prepre;
-            prepre = pre;
-        }
-        if (fast != null) {
-            slow = slow.next;
+            pre.next = prePre;
+            prePre = pre;
         }
         while (pre != null && slow != null) {
             if (pre.val != slow.val) {
@@ -71,19 +82,22 @@ public class IsPalindromic {
      * @return
      */
     public static boolean isPalindromeByAllStack(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
         ListNode temp = head;
-        Stack<Integer> stack = new Stack();
-        //把链表节点的值存放到栈中
+        Stack<Integer> stack = new Stack<>();
         while (temp != null) {
             stack.push(temp.val);
             temp = temp.next;
         }
-        //然后再出栈
-        while (head != null) {
-            if (head.val != stack.pop()) {
+        temp = head;
+        while (!stack.isEmpty()) {
+            if (stack.pop() != temp.val) {
                 return false;
+            } else {
+                temp = temp.next;
             }
-            head = head.next;
         }
         return true;
     }
@@ -121,7 +135,7 @@ public class IsPalindromic {
     /**
      * 方法4：通过递归来实现
      */
-
+    static ListNode temp;
     public static boolean isPalindromeByRe(ListNode head) {
         temp = head;
         return check(head);

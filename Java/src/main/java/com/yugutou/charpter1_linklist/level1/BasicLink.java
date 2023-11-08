@@ -99,18 +99,85 @@ public class BasicLink {
 
     class DoubleNode {
         private int val;
-        private DoubleNode left;
-        private DoubleNode right;
+        private DoubleNode pre;
+        private DoubleNode next;
 
         public DoubleNode(int val) {
             this.val = val;
         }
 
-        public DoubleNode(int val, DoubleNode left, DoubleNode right) {
+        public DoubleNode(int val, DoubleNode pre, DoubleNode next) {
             this.val = val;
-            this.left = left;
-            this.right = right;
+            this.pre = pre;
+            this.next = next;
         }
     }
+
+    /**
+     * 双向链表头部插入
+     * @param headNode
+     * @param targetNode
+     */
+    public static void insertDoubleNodeInHead(DoubleNode headNode,
+                                        DoubleNode targetNode){
+        targetNode.next = headNode.next;
+        headNode.next.pre = targetNode;
+        targetNode.pre = headNode;
+        headNode.next = targetNode;
+    }
+
+    /**
+     * 双向链表尾部插入
+     * @param tailNode
+     * @param targetNode
+     */
+    public static void insertDoubleNodeInTail(DoubleNode tailNode,
+                                        DoubleNode targetNode){
+        targetNode.pre = tailNode.pre;
+        tailNode.pre.next = targetNode;
+        targetNode.next = tailNode;
+        tailNode.pre = targetNode;
+    }
+
+    /**
+     * 双向链表中间插入，在值为val的节点后插入
+     * @param headNode
+     * @param val
+     * @param targetNode
+     */
+    public static void insertDoubleNodeInMid(DoubleNode headNode,
+                                              int val,
+                                              DoubleNode targetNode){
+        DoubleNode node = headNode;
+        while ( node != null && node.val != val ) {
+            node = node.next;
+        }
+        targetNode.next = node.next;
+        node.next.pre = targetNode;
+        node.next = targetNode;
+        targetNode.pre = node;
+    }
+
+    /**
+     * 双向链表删除节点
+     * @param headNode
+     * @param val
+     * @param targetNode
+     */
+    public static void deleteDoubleNode(DoubleNode headNode,
+                                             int val,
+                                             DoubleNode targetNode){
+        DoubleNode node = headNode;
+        while ( node != null && node.val != val ) {
+            node = node.next;
+        }
+        if (node == null) {
+            System.out.println("要删除的链表节点不存在");
+            return;
+        }
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+    }
+
 
 }

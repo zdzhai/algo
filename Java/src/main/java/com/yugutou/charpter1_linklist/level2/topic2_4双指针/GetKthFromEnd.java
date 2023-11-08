@@ -2,6 +2,7 @@ package com.yugutou.charpter1_linklist.level2.topic2_4双指针;
 
 /**
  * 寻找链表倒数第K个结点
+ * 快慢指针，快指针比慢指针先走K个位置，然后再一起走，
  */
 public class GetKthFromEnd {
 
@@ -13,10 +14,8 @@ public class GetKthFromEnd {
     }
 
     public static ListNode getKthFromEnd(ListNode head, int k) {
-        ListNode fast = head;
-        ListNode slow = head;
-
-        while (fast != null && k > 0) {
+        ListNode fast = head, slow = head;
+        while (fast != null && k > 0){
             fast = fast.next;
             k--;
         }
