@@ -1,5 +1,7 @@
 package com.yugutou.charpter1_linklist.level3;
 
+import com.yugutou.charpter1_linklist.level3.HasCycleAndFindEntrance.ListNode;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,20 +45,22 @@ public class HasCycleAndFindEntrance {
 
     /**
      * 方法1：通过HashMap或者实现
-     *
+     * 遇到重复的第一个元素，就是入口元素
      * @param head
      * @return
      */
     public static ListNode detectCycleByMap(ListNode head) {
-        ListNode pos = head;
-        Set<ListNode> visited = new HashSet<ListNode>();
-        while (pos != null) {
-            if (visited.contains(pos)) {
-                return pos;
+        if (head == null || head.next == null) {
+            return null;
+        }
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (set.contains(head)) {
+                return head;
             } else {
-                visited.add(pos);
+                set.add(head);
             }
-            pos = pos.next;
+            head = head.next;
         }
         return null;
     }
@@ -65,6 +69,7 @@ public class HasCycleAndFindEntrance {
 
     /**
      * 方法2 通过双指针实现
+     * 快慢指针先确定成环，在交集处以及head放两个指针，同时一部前进，交汇处为入口节点。
      *
      * @param head
      * @return
@@ -75,20 +80,22 @@ public class HasCycleAndFindEntrance {
             return null;
         }
         ListNode slow = head, fast = head;
-        while (fast != null) {
+        ListNode pNode = null;
+        while (fast !=  null && fast.next != null) {
+            fast = fast.next.next;
             slow = slow.next;
-            if (fast.next != null) {
-                fast = fast.next.next;
-            } else {
-                return null;
-            }
             if (fast == slow) {
-                ListNode ptr = head;
-                while (ptr != slow) {
-                    ptr = ptr.next;
-                    slow = slow.next;
+                pNode = slow;
+                break;
+            }
+        }
+        if (pNode != null) {
+            while (head != null){
+                head = head.next;
+                pNode = pNode.next;
+                if (pNode == head) {
+                    return head;
                 }
-                return ptr;
             }
         }
         return null;

@@ -1,7 +1,6 @@
 package com.yugutou.charpter1_linklist.level3;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class HasCycle {
     /**
@@ -14,7 +13,7 @@ public class HasCycle {
         ListNode nodeA = null;
 
         //构造链表是否存在环
-        int isCycle = 2;
+        int isCycle = 1;
         switch (isCycle) {
             case 1://构造的链表中存在环
                 nodeA = initLinkedListHasCycle(a);
@@ -42,24 +41,31 @@ public class HasCycle {
     }
 
     /**
-     * 方法1：通过HashMap判断
+     * 方法1：通过HashSet判断
+     * 遍历并加入Map,key = val, value = node
+     * 如果存在冲突则表示有环
      *
      * @param head
      * @return
      */
     public static boolean hasCycleByMap(ListNode head) {
-        Set<ListNode> seen = new HashSet<ListNode>();
+        if (head == null) {
+            return false;
+        }
+        Set<ListNode> set = new HashSet<>();
         while (head != null) {
-            if (!seen.add(head)) {
+            if (!set.add(head)) {
                 return true;
+            } else {
+                head = head.next;
             }
-            head = head.next;
         }
         return false;
     }
 
     /**
      * 方法2 通过双指针实现
+     * 使用快慢指针，快2慢1，如果相遇则表示成环。
      *
      * @param head
      * @return
@@ -69,13 +75,14 @@ public class HasCycle {
         if (head == null || head.next == null) {
             return false;
         }
-        ListNode fast = head;
         ListNode slow = head;
+        ListNode fast = head;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
-            if (fast == slow)
+            if (slow == fast) {
                 return true;
+            }
         }
         return false;
     }
