@@ -5,7 +5,7 @@ public class ReverseList {
         int[] a = {4, 3, 2, 1};
         ListNode nodeA = initLinkedList(a);
         ListNode d = null;
-        int testMethod = 4;
+        int testMethod = 2;
         switch (testMethod) {
             case 1://方法2：虚拟结点，,并复用已有的结点
                 d = reverseListByDummyNotCreate(nodeA);
@@ -28,15 +28,18 @@ public class ReverseList {
      * @return
      */
     public static ListNode reverseListByDummyNotCreate(ListNode head) {
-        ListNode ans = new ListNode(-1);
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(-1);
         ListNode cur = head;
         while (cur != null) {
             ListNode next = cur.next;
-            cur.next = ans.next;
-            ans.next = cur;
+            cur.next = dummy.next;
+            dummy.next = cur;
             cur = next;
         }
-        return ans.next;
+        return dummy.next;
     }
 
 
@@ -47,15 +50,19 @@ public class ReverseList {
      * @return
      */
     public static ListNode reverseListSimple(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
-        while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+        if (head == null || head.next == null) {
+            return head;
         }
-        return prev;
+        ListNode temp = head;
+        ListNode cur = head;
+        ListNode pre = null;
+        while (temp != null) {
+            temp = temp.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
     }
 
     /**
