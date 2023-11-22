@@ -7,9 +7,9 @@ import java.util.Stack;
  */
 public class ReverseList_AddList {
     public static void main(String[] args) {
-        int[] a = {1,8};
+        int[] a = {2};
         ListNode nodeA = initLinkedList(a);
-        int[] b = {1,2};
+        int[] b = {8,9,9};
         ListNode nodeB = initLinkedList(b);
 
         ListNode d = null;
@@ -75,7 +75,8 @@ public class ReverseList_AddList {
 
     /**
      * 方法2：通过链表反转来实现
-     *
+     * 先链表反转，然后按位相加判断进位
+     * 得到最终结果后，还需要再反转一次
      * @param head1
      * @param head2
      * @return
@@ -83,27 +84,29 @@ public class ReverseList_AddList {
     public static ListNode addInListByReverse(ListNode head1, ListNode head2) {
         head1 = reverse(head1);
         head2 = reverse(head2);
-        ListNode head = new ListNode(-1);
-        ListNode cur = head;
-        int carry = 0;
-        while (head1 != null || head2 != null) {
-            int val = carry;
-            if (head1 != null) {
-                val += head1.val;
-                head1 = head1.next;
+        ListNode node1 = head1, node2 = head2;
+        ListNode res = new ListNode(-1);
+        ListNode node = res;
+        int pre = 0;
+        while (node1 != null || node2 != null) {
+            int val = pre;
+            if (node1 != null) {
+                val += node1.val;
+                node1 = node1.next;
             }
-            if (head2 != null) {
-                val += head2.val;
-                head2 = head2.next;
+            if (node2 != null) {
+                val += node2.val;
+                node2 = node2.next;
             }
-            cur.next = new ListNode(val % 10);
-            carry = val / 10;
-            cur = cur.next;
+            pre = val >= 10 ? 1 : 0;
+            int temp = val >= 10 ? val - 10 : val;
+            node.next = new ListNode(temp);
+            node = node.next;
         }
-        if (carry > 0) {
-            cur.next = new ListNode(carry);
+        if (pre == 1) {
+            node.next = new ListNode(pre);
         }
-        return reverse(head.next);
+        return reverse(res.next);
     }
 
     private static ListNode reverse(ListNode head) {

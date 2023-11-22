@@ -14,22 +14,25 @@ public class ReverseListTwoGroup {
 
     /**
      * 方法3：直接根据两个指针的情况来设置
+     * 使用虚拟头节点
+     *
      * @param head
      * @return
      */
     public static  ListNode swapPairs(ListNode head) {
-        ListNode dummyHead = new ListNode(0);
-        dummyHead.next = head;
-        ListNode cur = dummyHead;
-        while (cur.next != null && cur.next.next != null) {
-            ListNode node1 = cur.next;
-            ListNode node2 = cur.next.next;
-            cur.next = node2;
-            node1.next = node2.next;
-            node2.next = node1;
-            cur = node1;
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode pre = dummyNode, cur = dummyNode.next;
+        while (cur != null && cur.next != null) {
+            ListNode next = cur.next;
+            cur.next = next.next;
+            next.next = cur;
+            pre.next = next;
+
+            pre = pre.next.next;
+            cur = cur.next;
         }
-        return dummyHead.next;
+        return dummyNode.next;
     }
     /**
      * 初始化链表

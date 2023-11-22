@@ -6,7 +6,7 @@ public class ReverseListBetween {
         ListNode nodeA = initLinkedList(a);
 
         ListNode d = null;
-        int testMethod = 1;
+        int testMethod = 2;
         switch (testMethod) {
             case 1://方法1：穿针引线法
                 d = reverseBetween(nodeA, 2, 4);
@@ -85,7 +85,8 @@ public class ReverseListBetween {
 
     /**
      * 方法2：头插法
-     *
+     * 首先移动到待反转节点的前一个位置
+     * 将新节点移动到前边
      * @param head
      * @param left
      * @param right
@@ -100,9 +101,8 @@ public class ReverseListBetween {
             pre = pre.next;
         }
         ListNode cur = pre.next;
-        ListNode next;
         for (int i = 0; i < right - left; i++) {
-            next = cur.next;
+            ListNode next = cur.next;
             cur.next = next.next;
             next.next = pre.next;
             pre.next = next;

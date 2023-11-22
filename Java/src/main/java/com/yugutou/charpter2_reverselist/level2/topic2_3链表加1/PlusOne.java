@@ -7,9 +7,9 @@ import java.util.Stack;
  */
 public class PlusOne {
     public static void main(String[] args) {
-        int[] a = {7, 8};
-//        int[] a = {9,9,9};
-//        int[] a = {1, 2, 3};
+        //int[] a = {7, 8};
+        int[] a = {9,9,9};
+        //int[] a = {1, 2, 3};
         ListNode nodeA = initLinkedList(a);
 
         ListNode node = plusOne(nodeA);
@@ -19,25 +19,26 @@ public class PlusOne {
     }
 
     public static ListNode plusOne(ListNode head) {
-        Stack<Integer> st = new Stack();
-        while (head != null) {
-            st.push(head.val);
-            head = head.next;
+        Stack<ListNode> stack = new Stack<>();
+        ListNode cur = head;
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next;
         }
-        int carry = 0;
-        ListNode dummy = new ListNode(0);
-//        int adder = 1;
-        while (!st.empty() || carry > 0) {
-            int digit = st.empty() ? 0 : st.pop();
-            int sum = digit + 1 + carry;
-            carry = sum >= 10 ? 1 : 0;
-            sum = sum >= 10 ? sum - 10 : sum;
-            ListNode cur = new ListNode(sum);
-            cur.next = dummy.next;
-            dummy.next = cur;
-//            adder = 0;
+        int front = 0;
+        int add = 1;
+        ListNode dummyNode = new ListNode(0);
+        while (!stack.isEmpty() || front == 1) {
+            ListNode last = stack.isEmpty() ? new ListNode(0) : stack.pop();
+            int val = last.val + add + front;
+            front = val >= 10 ? 1 : 0;
+            last.val = val >= 10 ? val - 10 : val;
+            cur = new ListNode(last.val);
+            cur.next = dummyNode.next;
+            dummyNode.next = cur;
+            add = 0;
         }
-        return dummy.next;
+        return dummyNode.next;
     }
 
 
