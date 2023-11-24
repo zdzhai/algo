@@ -8,9 +8,9 @@ import java.util.Arrays;
  */
 public class Division {
     public static void main(String[] args) {
-        int[] arr = {3, 1, 2, 4};
+        int[] arr = {1,0,3,2};
         int test = 1;
-        if (test == 2) {
+        if (test == 1) {
             //双指针,不稳定的方法
             System.out.println(Arrays.toString(sortArrayByParity(arr)));
         } else {
@@ -22,23 +22,31 @@ public class Division {
     /**
      * 双指针，不稳定 的移动
      *
-     * @param A
+     * @param nums
      * @return
      */
-    public static int[] sortArrayByParity(int[] A) {
-        int left = 0, right = A.length - 1;
-        while (left < right) {
-            if (A[left] % 2 > A[right] % 2) {
-                int tmp = A[left];
-                A[left] = A[right];
-                A[right] = tmp;
+    public static int[] sortArrayByParity(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            while (left <= right) {
+                if (nums[left] % 2 == 1) {
+                    break;
+                }
+                left++;
             }
-
-            if (A[left] % 2 == 0) left++;
-            if (A[right] % 2 == 1) right--;
+            while (left <= right) {
+                if (nums[right] % 2 == 0) {
+                    break;
+                }
+                right--;
+            }
+            if (left <= right ) {
+                int temp = nums[left];
+                nums[left++] = nums[right];
+                nums[right--] = temp;
+            }
         }
-
-        return A;
+        return nums;
     }
 
     /**

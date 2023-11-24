@@ -16,13 +16,13 @@ public class ReplaceSpace {
      * @return
      */
     public static String replaceSpace1(StringBuffer str) {
+        char[] chars = str.toString().toCharArray();
         String res = "";
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (c == ' ')
-                res += "%20";
-            else
-                res += c;
+        for (char c : chars) {
+            if (c == ' ') {
+                res += " %20";
+            }
+            res += c;
         }
         return res;
     }

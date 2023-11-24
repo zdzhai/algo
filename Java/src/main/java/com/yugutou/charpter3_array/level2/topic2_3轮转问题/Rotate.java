@@ -25,8 +25,8 @@ public class Rotate {
             int temp = nums[start];
             nums[start] = nums[end];
             nums[end] = temp;
-            start += 1;
-            end -= 1;
+            start++;
+            end--;
         }
     }
 }

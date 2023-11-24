@@ -28,14 +28,14 @@ public class DeleteVal {
      * @return
      */
     public static int removeElement(int[] nums, int val) {
-        int slow = 0;
-        for (int fast = 0; fast < nums.length; fast++) {
+        int size = nums.length;
+        int slow = 0, fast = 1;
+        while (fast < size) {
             if (nums[fast] != val) {
-                nums[slow] = nums[fast];
-                slow++;
+                nums[slow++] = nums[fast];
             }
+            fast++;
         }
-        //最后剩余元素的数量
         return slow;
     }
 
@@ -53,24 +53,22 @@ public class DeleteVal {
 //        3, 3, 3, [], []
         int right = nums.length - 1;
         int left = 0;
-
-        for (left = 0; left <= right; ) {
-            if ((nums[left] == val) && (nums[right] != val)) {
-                int tmp = nums[left];
-                nums[left] = nums[right];
-                nums[right] = tmp;
-
-            }
-
-            if (nums[left] != val) {
-                left++;
-            }
-            if (nums[right] == val){
+        while (left <= right) {
+            while (left < right) {
+                if (nums[right] != val) {
+                    break;
+                }
                 right--;
             }
-
+            while (left < right) {
+                if (nums[left] == val) {
+                    break;
+                }
+                left++;
+            }
+            nums[left++] = nums[right--];
         }
-        return left ;
+        return left;
     }
 
     /**

@@ -16,7 +16,7 @@ public class Merge2Array {
         int[] arr1 = {1,2,3,0,0,0,};
         int[] arr2 = new int[]{2, 5, 6};
 
-        int testMethod = 3;
+        int testMethod = 2;
         switch (testMethod) {
             case 1://通过排序实现合并
                 merge1(arr1, 3, arr2, 3);
@@ -60,14 +60,18 @@ public class Merge2Array {
         int i = nums1_len + nums2_len - 1;
         int len1 = nums1_len - 1, len2 = nums2_len - 1;
         while (len1 >= 0 && len2 >= 0) {
-            if (nums1[len1] <= nums2[len2])
-                nums1[i--] = nums2[len2--];
-            else if (nums1[len1] > nums2[len2])
+            if (nums1[len1] >= nums2[len2]) {
                 nums1[i--] = nums1[len1--];
+            } else {
+                nums1[i--] = nums2[len2--];
+            }
         }
-        //假如A或者B数组还有剩余
-        while (len2 != -1) nums1[i--] = nums2[len2--];
-        while (len1 != -1) nums1[i--] = nums1[len1--];
+        while (len1 != -1) {
+            nums1[i--] = nums1[len1--];
+        }
+        while (len2 != -1) {
+            nums1[i--] = nums2[len2--];
+        }
     }
 
     /**
