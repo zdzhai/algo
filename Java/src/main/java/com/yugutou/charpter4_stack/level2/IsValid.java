@@ -16,28 +16,19 @@ public class IsValid {
         smap.put('[', ']');
 
         Stack<Character> stack = new Stack<>();
-
         for (int i = 0; i < s.length(); i++) {
-            char item = s.charAt(i);
-            if (smap.containsKey(item)) {
-                stack.push(item);
-            } else {
-                if (!stack.isEmpty()) {
-                    Character left = stack.pop();
-                    char rightchar = smap.get(left);
-                    if (rightchar != item) {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
+            char ch = s.charAt(i);
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(smap.get(ch));
+            } else if (stack.isEmpty() || stack.pop() != ch) {
+                return false;
             }
         }
         return stack.isEmpty();
     }
 
     public static void main(String[] args) {
-        String s = "()[]{}";
+        String s = ")[]{}";
         System.out.println(isValid(s));
     }
 }
