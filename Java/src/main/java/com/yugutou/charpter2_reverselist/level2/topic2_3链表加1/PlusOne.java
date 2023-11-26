@@ -18,6 +18,11 @@ public class PlusOne {
 
     }
 
+    /**
+     * 需要注意进位以及如果进位后位数不够了需要往前边补一位
+     * @param head
+     * @return
+     */
     public static ListNode plusOne(ListNode head) {
         Stack<ListNode> stack = new Stack<>();
         ListNode cur = head;

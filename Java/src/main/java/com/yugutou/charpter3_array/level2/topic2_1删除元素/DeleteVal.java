@@ -29,7 +29,7 @@ public class DeleteVal {
      */
     public static int removeElement(int[] nums, int val) {
         int size = nums.length;
-        int slow = 0, fast = 1;
+        int slow = 0, fast = 0;
         while (fast < size) {
             if (nums[fast] != val) {
                 nums[slow++] = nums[fast];
