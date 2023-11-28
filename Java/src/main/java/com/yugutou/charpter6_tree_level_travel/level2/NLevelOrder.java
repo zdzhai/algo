@@ -1,9 +1,9 @@
 package com.yugutou.charpter6_tree_level_travel.level2;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * LeetCode429
@@ -12,31 +12,41 @@ import java.util.List;
  */
 public class NLevelOrder {
     public static void main(String[] args) {
-        NTreeNode nTreeNode=NTreeNode.buildBinaryTree();
+        NTreeNode nTreeNode= NTreeNode.buildBinaryTree();
         System.out.println(nLevelOrder(nTreeNode));
 
     }
 
+    /**
+     * 和二叉树的层序遍历类似
+     * 使用队列
+     * @param root
+     * @return
+     */
     public static List<List<Integer>> nLevelOrder(NTreeNode root) {
-        List<List<Integer>> value = new ArrayList<>();
-        Deque<NTreeNode> q = new ArrayDeque<>();
-        if (root != null)
-            q.addLast(root);
-        while (!q.isEmpty()) {
-            Deque<NTreeNode> next = new ArrayDeque<>();
-            List<Integer> nd = new ArrayList<>();
-            while (!q.isEmpty()) {
-                NTreeNode cur = q.pollFirst();
-                nd.add(cur.val);
-                for (NTreeNode chd : cur.children) {
-                    if (chd != null)
-                        next.add(chd);
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        Queue<NTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            List<Integer> list = new ArrayList<>();
+            int size = queue.size();
+            while (size > 0) {
+                NTreeNode node = queue.remove();
+                size--;
+                list.add(node.val);
+                List<NTreeNode> children = node.children;
+                for (NTreeNode child : children) {
+                    if (child != null) {
+                        queue.add(child);
+                    }
                 }
             }
-            q = next;
-            value.add(nd);
+            ans.add(list);
         }
-        return value;
+        return ans;
     }
 
 }

@@ -22,22 +22,30 @@ public class AverageOfLevels {
     }
 
     public static List<Double> averageOfLevels(TreeNode root) {
-        List<Double> res = new ArrayList<>();
-        if (root == null) return res;
-        Queue<TreeNode> list = new LinkedList<>();
-        list.add(root);
-        while (list.size() != 0) {
-            int len = list.size();
-            double sum = 0;
-            for (int i = 0; i < len; i++) {
-                TreeNode node = list.poll();
-                sum += node.val;
-                if (node.left != null) list.add(node.left);
-                if (node.right != null) list.add(node.right);
-            }
-            res.add(sum / len);
+        if (root == null) {
+            return new ArrayList<>();
         }
-        return res;
+        List<Double> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int num = size;
+            long sum = 0;
+            while (size > 0) {
+                TreeNode node = queue.remove();
+                size--;
+                sum += node.val;
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            ans.add( (sum * 1.0) / (num * 1.0));
+        }
+        return ans;
     }
 }
 

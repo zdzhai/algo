@@ -21,30 +21,42 @@ public class LevelOrderBottom {
         System.out.println(level.toString());
     }
 
+    /**
+     * 和自顶向下一致，不过每次都加入到数组的头部
+     * @param root
+     * @return
+     */
     public static List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> levelOrder = new LinkedList<List<Integer>>();
         if (root == null) {
-            return levelOrder;
+            return new ArrayList<>();
         }
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(root);
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        LinkedList<List<Integer>> linkedList = new LinkedList<>();
+        queue.add(root);
         while (!queue.isEmpty()) {
-            List<Integer> level = new ArrayList<Integer>();
             int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                level.add(node.val);
-                TreeNode left = node.left, right = node.right;
-                if (left != null) {
-                    queue.offer(left);
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
+                TreeNode node = queue.remove();
+                list.add(node.val);
+                size--;
+                if (node.left != null) {
+                    queue.add(node.left);
                 }
-                if (right != null) {
-                    queue.offer(right);
+                if (node.right != null) {
+                    queue.add(node.right);
                 }
             }
-            levelOrder.add(0, level);//栈
+            //linkedList.addFirst(list);
+            ans.add(0, list);
         }
-        return levelOrder;
+        /*while (!linkedList.isEmpty()) {
+            List<Integer> list = linkedList.removeFirst();
+            ans.add(list);
+        }*/
+        return ans;
     }
 }
 

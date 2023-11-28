@@ -5,6 +5,7 @@ import com.yugutou.tools.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * LeetCode102 题目要求：
@@ -19,35 +20,36 @@ public class Level102Order {
         System.out.println(level.toString());
     }
 
+    /**
+     * 在每层的遍历之前先获取一下当前的元素个数，也就是上一层的元素个数
+     * @param root
+     * @return
+     */
     public static List<List<Integer>> level102Order(TreeNode root) {
         if (root == null) {
-            return new ArrayList<List<Integer>>();
+            return new ArrayList<>();
         }
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> ans = new ArrayList<>();
 
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
-        //将根节点放入队列中，然后不断遍历队列
         queue.add(root);
-        while (queue.size() > 0) {
-            //获取当前队列的长度，这个长度相当于 当前这一层的节点个数
+        while (!queue.isEmpty()) {
             int size = queue.size();
-            ArrayList<Integer> tmp = new ArrayList<Integer>();
-            //将队列中的元素都拿出来(也就是获取这一层的节点)，放到临时list中
-            //如果节点的左/右子树不为空，也放入队列中
-            for (int i = 0; i < size; ++i) {
-                TreeNode t = queue.remove();
-                tmp.add(t.val);
-                if (t.left != null) {
-                    queue.add(t.left);
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
+                TreeNode node = queue.remove();
+                list.add(node.val);
+                size--;
+                if (node.left != null) {
+                    queue.add(node.left);
                 }
-                if (t.right != null) {
-                    queue.add(t.right);
+                if (node.right != null) {
+                    queue.add(node.right);
                 }
             }
-            //将临时list加入最终返回结果中
-            res.add(tmp);
+            ans.add(list);
         }
-        return res;
+        return ans;
     }
 }
 

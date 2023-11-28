@@ -2,10 +2,9 @@ package com.yugutou.charpter6_tree_level_travel.level2;
 
 import com.yugutou.tools.BinaryTree;
 import com.yugutou.tools.TreeNode;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import sun.reflect.generics.tree.Tree;
+
+import java.util.*;
 
 /**
  * LeetCode 515题目要求：
@@ -19,26 +18,35 @@ public class LargestValues {
         System.out.println(level.toString());
     }
 
+    /**
+     * 遍历每层的时候找到最大值
+     * @param root
+     * @return
+     */
     public static List<Integer> largestValues(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-        Deque<TreeNode> deque = new ArrayDeque<>();
-
-        if (root != null) {
-            deque.addLast(root);
-        }
-
-        while (!deque.isEmpty()) {
-            int size = deque.size();
-            int levelMaxNum = Integer.MIN_VALUE;
-            for (int i = 0; i < size; i++) {
-                TreeNode node = deque.poll();
-                levelMaxNum = Math.max(node.val, levelMaxNum);
-                if (node.left != null) deque.addLast(node.left);
-                if (node.right != null) deque.addLast(node.right);
+       if (root == null) {
+           return new ArrayList<>();
+       }
+       List<Integer> ans = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int max = Integer.MIN_VALUE;
+            while (size > 0) {
+                TreeNode node = queue.remove();
+                size--;
+                max = Math.max(max, node.val);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
             }
-            res.add(levelMaxNum);
+            ans.add(max);
         }
-        return res;
+        return ans;
     }
 }
 
