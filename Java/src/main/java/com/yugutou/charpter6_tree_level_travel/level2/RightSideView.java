@@ -54,6 +54,11 @@ public class RightSideView {
         return ans;
     }
 
+    /**
+     * 倒序找每行的最后一个元素，即为左视图
+     * @param root
+     * @return
+     */
     public static List<Integer> leftSideView(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();

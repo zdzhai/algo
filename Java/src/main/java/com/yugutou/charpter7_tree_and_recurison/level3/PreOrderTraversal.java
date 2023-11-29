@@ -3,10 +3,7 @@ package com.yugutou.charpter7_tree_and_recurison.level3;
 import com.yugutou.tools.BinaryTree;
 import com.yugutou.tools.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 基于迭代实现前序遍历
@@ -21,24 +18,38 @@ public class PreOrderTraversal {
     }
 
 
+    /**
+     * 迭代实现二叉树的前序遍历 中左右
+     * @param root
+     * @return
+     */
     public static List<Integer> preOrderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<Integer>();
         if (root == null) {
-            return res;
+            return new ArrayList<>();
         }
-
-        Deque<TreeNode> stack = new LinkedList<TreeNode>();
-        TreeNode node = root;
-        while (!stack.isEmpty() || node != null) {
-            while (node != null) {
-                res.add(node.val);
-                stack.push(node);
-                node = node.left;
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> ans = new ArrayList<>();
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                ans.add(root.val);
+                stack.push(root);
+                root = root.left;
             }
-            node = stack.pop();
-            node = node.right;
+            root = stack.pop();
+            root = root.right;
         }
-        return res;
+        /*stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }*/
+        return ans;
     }
 
 }

@@ -19,7 +19,8 @@ public class LastLeft {
     }
 
     /**
-     *
+     * 和上边类似
+     * 倒序找最后一行行的最后一个元素
      * @param root
      * @return
      */
@@ -32,7 +33,6 @@ public class LastLeft {
         TreeNode node = new TreeNode(-1);
         while (!queue.isEmpty()) {
             int size = queue.size();
-            int right = 0;
             while (size > 0) {
                 node = queue.remove();
                 size--;

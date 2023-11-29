@@ -19,18 +19,26 @@ public class InOrderTraversal {
         System.out.println(inorderTraversal(bTree.root));
     }
 
+    /**
+     * 迭代法二叉树的中序遍历 左中右
+     * @param root
+     * @return
+     */
     public static List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<Integer> ans = new ArrayList<Integer>();
         Deque<TreeNode> stack = new LinkedList<TreeNode>();
-        while (root != null || !stack.isEmpty()) {
+        while (!stack.isEmpty() || root != null) {
             while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
             root = stack.pop();
-            res.add(root.val);
+            ans.add(root.val);
             root = root.right;
         }
-        return res;
+        return ans;
     }
 }
