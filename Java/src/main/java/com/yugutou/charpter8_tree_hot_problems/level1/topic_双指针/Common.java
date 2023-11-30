@@ -19,17 +19,27 @@ public class Common {
         System.out.println(result);
     }
 
+    /**
+     * 定义两个遍历树元素的节点，然后同时遍历
+     * 遇到不一致就false
+     * @param p
+     * @param q
+     * @return
+     */
     public static boolean isSameTree(TreeNode p, TreeNode q) {
-        //如果都为空我们就认为他是相同的
-        if (p == null && q == null)
+        if (p == null && q == null) {
             return true;
-        //如果一个为空，一个不为空，很明显不可能是相同的树，直接返回false即可
-        if (p == null || q == null)
+        }
+        if (p == null || q == null) {
             return false;
-        //如果这两个节点都不为空并且又不相等，所以他也不可能是相同的树，直接返回false
-        if (p.val != q.val)
+        }
+
+        if (p.val != q.val) {
             return false;
-        //走到这一步说明节点p和q是完全相同的，我们只需要在比较他们的左右子节点即可
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        }
+        boolean sameLeft = isSameTree(p.left, q.left);
+        boolean sameRight = isSameTree(p.right, q.right);
+        return sameLeft && sameRight;
+
     }
 }

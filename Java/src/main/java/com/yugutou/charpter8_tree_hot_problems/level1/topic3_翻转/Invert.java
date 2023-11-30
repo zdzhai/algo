@@ -34,6 +34,7 @@ public class Invert {
 
     /**
      * 方法1：递归-前序
+     * 这里用的是后序的遍历顺序
      *
      * @param root
      * @return
@@ -42,12 +43,10 @@ public class Invert {
         if (root == null) {
             return null;
         }
-        TreeNode temp = root.left;
-        root.left = root.right;
-        root.right = temp;
-
-        TreeNode left = invertTree_1(root.left);
-        TreeNode right = invertTree_1(root.right);
+        TreeNode left = invertTree_1(root.right);
+        TreeNode right = invertTree_1(root.left);
+        root.left = left;
+        root.right = right;
         return root;
 
     }

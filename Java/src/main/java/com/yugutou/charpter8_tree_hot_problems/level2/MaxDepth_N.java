@@ -24,17 +24,22 @@ public class MaxDepth_N {
 
     }
 
+    /**
+     * root == null return 0
+     *
+     * @param root
+     * @return
+     */
     public static int maxDepth_N(NTreeNode root) {
         if (root == null) {
             return 0;
         } else if (root.children == null || root.children.isEmpty()) {
             return 1;
-        } else {
-            List<Integer> heights = new LinkedList<Integer>();
-            for (NTreeNode item : root.children) {
-                heights.add(maxDepth_N(item));
-            }
-            return Collections.max(heights) + 1;
         }
+        int maxDepth = 0;
+        for (NTreeNode child : root.children) {
+            maxDepth = Math.max(maxDepth, maxDepth_N(child));
+        }
+        return maxDepth + 1;
     }
 }

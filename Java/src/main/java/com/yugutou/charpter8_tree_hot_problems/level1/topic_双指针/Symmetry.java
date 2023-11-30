@@ -21,7 +21,7 @@ public class Symmetry {
 
     /**
      * LeetCode101 对称二叉树
-     *
+     * 同时遍历左节点和右节点（外侧），以及右节点和左节点（内侧）
      * @param root
      * @return
      */
@@ -43,7 +43,9 @@ public class Symmetry {
         if (p.val != q.val) {
             return false;
         }
-        return check(p.left, q.right) && check(p.right, q.left);
+        boolean checkOuter = check(p.left, q.right);
+        boolean checkInner= check(p.right, q.left);
+        return checkOuter && checkInner;
     }
 
 }

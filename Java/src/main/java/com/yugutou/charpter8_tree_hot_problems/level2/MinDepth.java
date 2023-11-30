@@ -12,7 +12,7 @@ public class MinDepth {
     public static void main(String[] args) {
         BinaryTree bTree = new BinaryTree();
         bTree.root = bTree.buildBinaryTreeComplex();
-        int testMethod = 2;
+        int testMethod = 1;
         int result = 0;
         switch (testMethod) {
             case 1://通过递归计算二叉树的深度
@@ -26,8 +26,10 @@ public class MinDepth {
     }
 
     /**
-     * 通过递归计算二叉树的最小
-     *
+     * 通过递归计算二叉树的最小深度
+     * 如果左为空，右不为空，1 + 右子树最小深度
+     * 如果左不为空，右为空，1 + 左子树最小深度
+     * 如果左右都不空，左右的最小值 + 1
      * @param root
      * @return
      */
@@ -35,23 +37,19 @@ public class MinDepth {
         if (root == null) {
             return 0;
         }
-
-        if (root.left == null && root.right == null) {
-            return 1;
+        if (root.left == null && root.right != null) {
+            return minDepth_1(root.right) + 1;
         }
-
-        int min_depth = Integer.MAX_VALUE;
-        if (root.left != null) {
-            min_depth = Math.min(minDepth_1(root.left), min_depth);
+        if (root.left != null && root.right == null) {
+            return minDepth_1(root.left) + 1;
         }
-        if (root.right != null) {
-            min_depth = Math.min(minDepth_1(root.right), min_depth);
-        }
-        return min_depth + 1;
+        int leftDepth = minDepth_1(root.left);
+        int rightDepth = minDepth_1(root.right);
+        return Math.min(leftDepth, rightDepth) + 1;
     }
 
     /**
-     * 通过层次遍历来求最大深度
+     * 通过层次遍历来求最小深度
      *
      * @return
      */

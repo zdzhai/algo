@@ -41,10 +41,17 @@ public class HasPathSum {
         if (root == null) {
             return false;
         }
+        /*if (root.left == null && root.right == null && sum == root.val) {
+            return true;
+        }*/
         if (root.left == null && root.right == null) {
             return sum == root.val;
         }
-        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+        sum -= root.val;
+       /* boolean left = hasPathSum(root.left, sum);
+        boolean right = hasPathSum(root.right, sum);
+        return left || right;*/
+        return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);
     }
 
 
@@ -63,10 +70,10 @@ public class HasPathSum {
         if (root == null) {
             return;
         }
-        path.offerLast(root.val);
         targetSum -= root.val;
+        path.offerLast(root.val);
         if (root.left == null && root.right == null && targetSum == 0) {
-            ret.add(new LinkedList<Integer>(path));
+            ret.add(new LinkedList<>(path));
         }
         dfs(root.left, targetSum);
         dfs(root.right, targetSum);

@@ -14,7 +14,7 @@ public class MaxDepth {
         BinaryTree bTree = new BinaryTree();
         bTree.root = bTree.buildBinaryTree();
         bTree.root = bTree.buildBinaryTreeComplex();
-        int testMethod = 3;
+        int testMethod = 1;
         int result = 0;
         switch (testMethod) {
             case 1://通过递归计算二叉树的深度
@@ -40,10 +40,9 @@ public class MaxDepth {
         if (root == null) {
             return 0;
         }
-        int leftHeight = maxDepth_1(root.left);
-        int rightHeight = maxDepth_1(root.right);
-        return Math.max(leftHeight, rightHeight) + 1;
-
+        int leftDepth = maxDepth_1(root.left);
+        int rightDepth = maxDepth_1(root.right);
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
     /**
