@@ -22,6 +22,8 @@ public class IsValidBST {
 
     /**
      * 递归实现
+     * 中序思路是 看最后的节点要如何处理
+     * 后序思路是 看根节点处如何处理
      */
 
     static long pre = Long.MIN_VALUE;
@@ -30,16 +32,14 @@ public class IsValidBST {
         if (root == null) {
             return true;
         }
-        // 如果左子树下某个元素不满足要求，则退出
         if (!isValidBST(root.left)) {
             return false;
         }
-        // 访问当前节点：如果当前节点小于等于中序遍历的前一个节点，说明不满足BST，返回 false；否则继续遍历。
-        if (root.val <= pre) {
+        if (pre >= root.val) {
             return false;
         }
         pre = root.val;
-        // 访问右子树
+
         return isValidBST(root.right);
     }
 

@@ -7,18 +7,44 @@ package com.yugutou.charpter9_bitree_bisearch.level2;
 public class PeakIndexInMountainArray {
     public static void main(String[] args) {
         int[] arr = {0, 1, 0};
-        System.out.println(peakIndexInMountainArray(arr));
+        System.out.println(peakIndexInMountainArray2(arr));
     }
 
     public static int peakIndexInMountainArray(int[] arr) {
         int n = arr.length;
-        int ans = -1;
-        for (int i = 1; i < n - 1; ++i) {
+        for (int i = 0; i < n - 1; i++) {
             if (arr[i] > arr[i + 1]) {
-                ans = i;
-                break;
+                return i;
             }
         }
-        return ans;
+        return -1;
+    }
+
+    /**
+     * 如果nums[i] > nums[i - 1] && nums[i] < nums[i + 1] left = mid + 1
+     * 如果nums[i] < nums[i - 1] && nums[i] > nums[i + 1] right = mid - 1
+     * 如果nums[i] > nums[i - 1] && nums[i] > nums[i + 1] return mid
+     * @param arr
+     * @return
+     */
+    public static int peakIndexInMountainArray2(int[] arr) {
+        if (arr.length == 3) {
+            return 1;
+        }
+
+        int n = arr.length;
+        int left = 0;
+        int right = n - 2;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] > arr[mid - 1] && arr[mid] < arr[mid + 1]) {
+                left = mid + 1;
+            } else if (arr[mid] < arr[mid - 1] && arr[mid] > arr[mid + 1]) {
+                right = mid - 1;
+            } else if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+        }
+        return -1;
     }
 }

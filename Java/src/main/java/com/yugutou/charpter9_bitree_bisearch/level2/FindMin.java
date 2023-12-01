@@ -5,21 +5,21 @@ package com.yugutou.charpter9_bitree_bisearch.level2;
  */
 public class FindMin {
     public static void main(String[] args) {
-        int[] nums = {3, 4, 5, 1, 2};
+        int[] nums = {2,3,4,5,1};
         System.out.println(findMin(nums));
     }
 
     public static int findMin(int[] nums) {
-        int low = 0;
-        int high = nums.length - 1;
-        while (low < high) {
-            int pivot = low + ((high - low) >> 1);
-            if (nums[pivot] < nums[high]) {
-                high = pivot;
-            } else {
-                low = pivot + 1;
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else if (nums[mid] > nums[right]) {
+                left = mid + 1;
             }
         }
-        return nums[low];
+        return nums[left];
     }
 }

@@ -24,26 +24,27 @@ public class DuplicateSearch {
     }
 
     public static int search1(int[] nums, int target) {
-        if (nums == null || nums.length == 0)
+        if (nums.length == 0) {
             return -1;
-        int left = 0;
-
-        if (nums[0] == target) {
-            return 0;
         }
-
-        int right = nums.length - 1;
+        int left = 0;
+        int right = nums.length;
         while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] < target) {
-                left = mid + 1;
-            } else if (nums[mid] > target) {
+            int mid = left + ((right - left) >> 1);
+            if (nums[mid] > target) {
                 right = mid - 1;
+            } else if (nums[mid] < target) {
+                left =  mid + 1;
             } else {
-                //找到之后，往左边找
-                while (mid != 0 && nums[mid] == target)
+                /*while (mid != 0 && nums[mid - 1] == target) {
                     mid--;
-                return mid + 1;
+                }
+                return mid;*/
+                if ((mid == 0) || nums[mid - 1] != target) {
+                    return mid;
+                } else {
+                    right = mid - 1;
+                }
             }
         }
         return -1;
