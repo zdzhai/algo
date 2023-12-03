@@ -17,9 +17,13 @@ public class CountBits {
     public static int[] countBits(int num) {
         int[] bits = new int[num + 1];
         for (int i = 0; i <= num; i++) {
-            for (int j = 0; j < 32; j++) {
-                bits[i] += (i >> j) & 1;
+            int count = 0;
+            int n = i;
+            while (n != 0) {
+                n &= (n - 1);
+                count++;
             }
+            bits[i] = count;
         }
         return bits;
     }

@@ -13,13 +13,13 @@ public class ReverseBits {
      * @return
      */
     public static int reverseBits(int n) {
-        int reversed = 0, power = 31;
-        while (n != 0) {
-            reversed += (n & 1) << power;
-            n >>>= 1;
-            power--;
+        int reverse = 0;
+        for (int i = 0; i < 32; i++) {
+            if (((n >> i) & 1) != 0) {
+                reverse += 1 << (32 - i - 1);
+            }
         }
-        return reversed;
+        return reverse;
     }
 
     /**

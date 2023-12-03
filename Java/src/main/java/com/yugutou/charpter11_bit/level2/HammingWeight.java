@@ -16,7 +16,10 @@ public class HammingWeight {
     public static int hammingWeight1(int n) {
         int count = 0;
         for (int i = 0; i < 32; i++) {
-            count += (n >> i) & 1;
+             if ((n & (1 << i)) != 0) {
+                 count++;
+             }
+             //count += (n >> i) & 1;
         }
         return count;
     }
