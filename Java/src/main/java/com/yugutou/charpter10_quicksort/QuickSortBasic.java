@@ -13,26 +13,29 @@ public class QuickSortBasic {
     }
 
     public static void quickSort(int[] arr, int left, int right) {
-        if (left < right) {
-            int pivot = arr[right];
-            int i = left - 1;
-            for (int j = left; j < right; j++) {
-                if (arr[j] < pivot) {
-                    i++;
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
-            }
-            //哨兵移动到位置pivotIndex上
-            int pivotIndex = i + 1;
-            int temp = arr[pivotIndex];
-            arr[pivotIndex] = arr[right];
-            arr[right] = temp;
-
-            quickSort(arr, left, pivotIndex - 1);
-            quickSort(arr, pivotIndex + 1, right);
+        if (left >= right) {
+            return;
         }
+        int l = left;
+        int r = right;
+        int temp = arr[left];
+        while (left < right) {
+            while (left < right && arr[right] >= temp) {
+                right--;
+            }
+            if (left < right) {
+                arr[left++] = arr[right];
+            }
+            while (left < right && arr[left] < temp) {
+                left++;
+            }
+            if (left < right) {
+                arr[right--] = arr[left];
+            }
+        }
+        arr[left] = temp;
+        quickSort(arr, l, left - 1);
+        quickSort(arr, left + 1, r);
     }
 
 
