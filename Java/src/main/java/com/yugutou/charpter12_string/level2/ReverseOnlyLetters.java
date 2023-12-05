@@ -10,18 +10,21 @@ public class ReverseOnlyLetters {
 
     public static String reverseOnlyLetters(String S) {
         Stack<Character> letters = new Stack();
-        for (char c : S.toCharArray())
-            if (Character.isLetter(c))
-                letters.push(c);
-
-        StringBuilder ans = new StringBuilder();
-        for (char c : S.toCharArray()) {
-            if (Character.isLetter(c))
-                ans.append(letters.pop());
-            else
-                ans.append(c);
+        char[] chars = S.toCharArray();
+        for (char ch : chars) {
+            if (Character.isLetter(ch)) {
+                letters.push(ch);
+            }
         }
 
+        StringBuilder ans = new StringBuilder();
+        for (char ch : chars) {
+            if (Character.isLetter(ch)) {
+                ans.append(letters.pop());
+            } else {
+                ans.append(ch);
+            }
+        }
         return ans.toString();
     }
 }

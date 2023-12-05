@@ -11,7 +11,7 @@ public class ToLowerCase {
         int n = s.length();
         char[] chars = s.toCharArray();
         for (int i = 0; i < n; ++i) {
-            if (chars[i] >= 65 && chars[i] <= 90) {
+            if (chars[i] >= 'A' && chars[i] <= 'Z'){
                 chars[i] += 32;
             }
         }

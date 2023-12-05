@@ -2,7 +2,7 @@ package com.yugutou.charpter12_string.level3;
 
 public class LongestCommonPrefix {
     public static void main(String[] args) {
-        String[] strs = {"flower", "flow", "flight"};
+        String[] strs = {"cir","car"};
         System.out.println(longestCommonPrefix1(strs));
     }
 
@@ -11,17 +11,24 @@ public class LongestCommonPrefix {
         if (strs == null || strs.length == 0) {
             return "";
         }
-        int length = strs[0].length();
-        int count = strs.length;
-        for (int i = 0; i < length; i++) {
-            char c = strs[0].charAt(i);
-            for (int j = 1; j < count; j++) {
-                if (i == strs[j].length() || strs[j].charAt(i) != c) {
-                    return strs[0].substring(0, i);
+        StringBuilder ans = new StringBuilder();
+        //外循环遍历第一个字符串的每一个字符
+        //内循环遍历其他字符的每一个和外循环同样索引的字符
+        for (int i = 0; i < strs[0].length(); i++) {
+            char ch = strs[0].charAt(i);
+            int j = 1;
+            for (j = 1; j < strs.length; j++) {
+                if( strs[j].length() <= i || strs[j].charAt(i) != ch ) {
+                    break;
                 }
             }
+            if (j == strs.length) {
+                ans.append(ch);
+            } else {
+                break;
+            }
         }
-        return strs[0];
+        return ans.toString();
     }
 
     /**

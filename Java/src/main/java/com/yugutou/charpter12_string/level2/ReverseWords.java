@@ -8,11 +8,16 @@ public class ReverseWords {
 
     public static String reverseWords(String s) {
         StringBuilder sb = trimSpaces(s);
-
-        // 翻转字符串
         reverse(sb, 0, sb.length() - 1);
-        // 翻转每个单词
-        reverseEachWord(sb);
+        int left = 0, right = 0;
+        while (right < sb.length()) {
+            while (right < sb.length() && sb.charAt(right) != ' ') {
+                right++;
+            }
+            reverse(sb,left, right - 1);
+            right++;
+            left = right;
+        }
         return sb.toString();
     }
 

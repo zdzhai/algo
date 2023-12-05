@@ -12,10 +12,12 @@ public class ReverseString {
 
     public static void reverseString(char[] s) {
         int n = s.length;
-        for (int left = 0, right = n - 1; left < right; ++left, --right) {
-            char tmp = s[left];
-            s[left] = s[right];
-            s[right] = tmp;
+        int left = 0;
+        int right = n - 1;
+        while (left <= right) {
+            char temp = s[left];
+            s[left++] = s[right];
+            s[right--] = temp;
         }
     }
 }

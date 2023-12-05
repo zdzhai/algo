@@ -8,15 +8,15 @@ public class IsPalindrome {
     }
 
     public static boolean isPalindrome(String s) {
-        StringBuffer sgood = new StringBuffer();
-        int length = s.length();
-        for (int i = 0; i < length; i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
             if (Character.isLetterOrDigit(ch)) {
-                sgood.append(Character.toLowerCase(ch));
+                sb.append(Character.toLowerCase(ch));
             }
         }
-        StringBuffer sgood_rev = new StringBuffer(sgood).reverse();
-        return sgood.toString().equals(sgood_rev.toString());
+        String origin = sb.toString();
+        StringBuilder reverse = sb.reverse();
+        return origin.equals(reverse.toString());
     }
 }

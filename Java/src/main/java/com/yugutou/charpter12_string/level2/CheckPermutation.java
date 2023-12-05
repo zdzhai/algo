@@ -31,11 +31,43 @@ public class CheckPermutation {
         if (s1.length() != s2.length()) {
             return false;
         }
-        char[] s1Chars = s1.toCharArray();
-        Map<Character, Integer> s1Map = getMap(s1);
-        Map<Character, Integer> s2Map = getMap(s2);
-        for (char s1Char : s1Chars) {
-            if (!s2Map.containsKey(s1Char) || (int)s2Map.get(s1Char) != (int)s1Map.get(s1Char)) {
+        Map<Character, Integer> map = getMap(s1);
+        for (int i = 0; i < s2.length(); i++) {
+            char c = s2.charAt(i);
+            if (!map.containsKey(c)) {
+                return false;
+            } else {
+                map.put(c, map.get(c) - 1);
+                if (map.get(c) == 0) {
+                    map.remove(c);
+                }
+            }
+        }
+        if (map.size() != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 使用数组来存储
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public static boolean checkPermutation3(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        int[] cnt = new int[26];
+        for(char c : s1.toCharArray()){
+            cnt[c - 'a']++;
+        }
+        for(char c : s2.toCharArray()){
+            cnt[c - 'a']--;
+        }
+        for(int i = 0 ; i < 26; i++){
+            if(cnt[i] != 0){
                 return false;
             }
         }
