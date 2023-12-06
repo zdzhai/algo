@@ -12,17 +12,17 @@ public class MyAtoi {
     }
 
     public static int myAtoi(String str) {
-        int len = str.length();
+        int n = str.length();
         char[] charArray = str.toCharArray();
 
         // 1、去除前导空格
         int index = 0;
-        while (index < len && charArray[index] == ' ') {
+        while (index < n && charArray[index] == ' ') {
             index++;
         }
 
         // 2、如果已经遍历完成（针对极端用例 "      "）
-        if (index == len) {
+        if (index == n) {
             return 0;
         }
 
@@ -39,7 +39,7 @@ public class MyAtoi {
         // 4、将后续出现的数字字符进行转换
         // 不能使用 long 类型，这是题目说的
         int res = 0;
-        while (index < len) {
+        while (index < n) {
             char currChar = charArray[index];
             // 4.1 先判断不合法的情况
             if (currChar > '9' || currChar < '0') {
