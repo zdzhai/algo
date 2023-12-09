@@ -6,20 +6,26 @@ public class AddStrings {
         System.out.println(addStrings(num1, num2));
     }
 
+    /**
+     * 同时倒序遍历，然后处理进位
+     *
+     * @param num1
+     * @param num2
+     * @return
+     */
     public static String addStrings(String num1, String num2) {
-        int i = num1.length() - 1, j = num2.length() - 1, add = 0;
-        StringBuffer ans = new StringBuffer();
-        while (i >= 0 || j >= 0 || add != 0) {
-            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
-            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
-            int result = x + y + add;
-            ans.append(result % 10);
-            add = result / 10;
+        int i = num1.length() - 1, j = num2.length() - 1, pre = 0;
+        StringBuilder sb = new StringBuilder();
+        int temp = 0;
+        while (i >= 0 || j >= 0 || pre != 0) {
+            int a = i >= 0 ?  num1.charAt(i) - '0' : 0;
+            int b = j >= 0 ?  num2.charAt(j) - '0' : 0;
+            temp = a + b + pre;
+            sb.append(temp >= 10 ? temp % 10 : temp);
+            pre = temp >= 10 ? 1 : 0;
             i--;
             j--;
         }
-        // 计算完以后的答案需要翻转过来
-        ans.reverse();
-        return ans.toString();
+        return sb.reverse().toString();
     }
 }
