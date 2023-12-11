@@ -6,7 +6,7 @@ public class CountPrimes {
 
     public static void main(String[] args) {
         System.out.println(countPrimes(10));
-        System.out.println(countPrimes2(10));
+        System.out.println(countPrimes2(499979));
     }
 
     /**
@@ -16,13 +16,13 @@ public class CountPrimes {
      * @return
      */
     public static int countPrimes(int n) {
-        int cnt = 0;
+        int count = 0;
         for (int i = 2; i < n; i++) {
             if (isPrime(i)) {
-                cnt++;
+                count++;
             }
         }
-        return cnt;
+        return count;
     }
 
     public static boolean isPrime(int num) {
@@ -37,22 +37,23 @@ public class CountPrimes {
 
     /**
      * 方法2：埃氏筛
+     * 如果一个数x是素数，那么2x,3x,4x一定不是素数
      */
 
     public static int countPrimes2(int n) {
-        int[] isPrime = new int[n];
-        Arrays.fill(isPrime, 1);
-        int ans = 0;
-        for (int i = 2; i < n; ++i) {
-            if (isPrime[i] == 1) {
-                ans += 1;
+        int[] nums = new int[n];
+        Arrays.fill(nums,1);
+        int count = 0;
+        for (int i = 2; i < n; i++) {
+            if (nums[i] == 1) {
+                count++;
                 if ((long) i * i < n) {
                     for (int j = i * i; j < n; j += i) {
-                        isPrime[j] = 0;
+                        nums[j] = 0;
                     }
                 }
             }
         }
-        return ans;
+        return count;
     }
 }

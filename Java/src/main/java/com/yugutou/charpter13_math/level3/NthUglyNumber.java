@@ -1,10 +1,16 @@
 package com.yugutou.charpter13_math.level3;
 
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+
 public class NthUglyNumber {
     public static void main(String[] args) {
 
         System.out.println(getUglyNumber(10));
         System.out.println(getUglyNumber2(10));
+        System.out.println(getUglyNumber3(1407));
     }
 
     /**
@@ -38,7 +44,7 @@ public class NthUglyNumber {
         while (index % 5 == 0) {
             index /= 5;
         }
-        return index == 1 ? true : false;
+        return index == 1;
     }
 
     /**
@@ -73,4 +79,33 @@ public class NthUglyNumber {
         int min = a > b ? b : a;
         return c < min ? c : min;
     }
+
+    /**
+     * todo 使用优先队列（对于本题优先在那里了）
+     * 额外使用set做去重
+     * @param index
+     * @return
+     */
+    public static int getUglyNumber3(int index) {
+        int[] nums = {2, 3, 5};
+        Set<Long> set = new HashSet<>();
+        Queue<Long> pq = new PriorityQueue<>();
+        set.add(1L);
+        pq.offer(1L);
+        for (int i = 1; i <= index; i++) {
+            Long x = pq.poll();
+            if (i == index) {
+                return x.intValue();
+            }
+            for (int num : nums) {
+                long n = x * num;
+                if (!set.contains(n)) {
+                    set.add(n);
+                    pq.offer(n);
+                }
+            }
+        }
+        return -1;
+    }
+
 }
