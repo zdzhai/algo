@@ -20,10 +20,8 @@ public class FindKthLargest {
             minHeap.add(nums[i]);
         }
         for (int i = k; i < len; i++) {
-            // 看一眼，不拿出，因为有可能没有必要替换
-            Integer topEle = minHeap.peek();
-            // 只要当前遍历的元素比堆顶元素大，堆顶弹出，遍历的元素进去
-            if (nums[i] > topEle) {
+            Integer min = minHeap.peek();
+            if (nums[i] > min) {
                 minHeap.poll();
                 minHeap.offer(nums[i]);
             }
