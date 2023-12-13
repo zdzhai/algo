@@ -13,15 +13,13 @@ public class FindMaxAverage {
         if (k > nums.length || nums.length < 1 || k < 1) {
             return 0;
         }
-        //   第一步 先求第一个窗口的和
         for (int i = 0; i < k; i++) {
             widowSum += nums[i];
         }
-
-        //  第二步 ：遍历，每次右边增加一个，左边减去一个，重新计算窗口最大值
         int res = widowSum;
-        for (int right = k; right < len; right++) {
-            widowSum += nums[right] - nums[right - k];
+        for (int i = k; i < len; i++) {
+            widowSum += nums[i];
+            widowSum -= nums[i - k];
             res = Math.max(res, widowSum);
         }
         return (double) res / k;
