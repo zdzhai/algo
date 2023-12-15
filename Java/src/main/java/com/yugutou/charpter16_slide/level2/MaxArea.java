@@ -6,13 +6,27 @@ public class MaxArea {
         System.out.println(maxArea(nums));
     }
 
+    /**
+     * 使用滑动窗口
+     * 向内移动长板，（j - i变小）（nums[j]-nums[i]不变，短板决定的）面积必减小
+     * 向内移动短板（j - i变小）（nums[j]-nums[i]可能增大，面积可能更大
+     * @param height
+     * @return
+     */
     public static int maxArea(int[] height) {
-        int i = 0, j = height.length - 1, res = 0;
-        while (i < j) {
-            res = height[i] < height[j] ?
-                    Math.max(res, (j - i) * height[i++]) :
-                    Math.max(res, (j - i) * height[j--]);
+        int left = 0, n = height.length, right = n - 1;
+        int area = 0;
+        int x = 0, y = 0;
+        while (left < right) {
+            x = right - left;
+            y = Math.min(height[right], height[left]);
+            area = Math.max(area, x * y);
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
         }
-        return res;
+        return area;
     }
 }

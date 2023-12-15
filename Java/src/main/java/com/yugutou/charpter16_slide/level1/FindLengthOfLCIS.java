@@ -28,6 +28,11 @@ public class FindLengthOfLCIS {
         return res;
     }
 
+    /**
+     * 使用滑动窗口，出现下降序列时，重新计数
+     * @param nums
+     * @return
+     */
     public static int findLengthOfLCIS_2(int[] nums) {
         int curLen = 1;//当前连续递增区间的长度
         int res = 1;

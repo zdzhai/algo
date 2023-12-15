@@ -11,31 +11,32 @@ public class FindAnagrams {
 
     }
 
+    /**
+     * 判断数组一样的时候，记录初始位置
+     * @param s
+     * @param p
+     * @return
+     */
     public static List<Integer> findAnagrams(String s, String p) {
         int sLen = s.length(), pLen = p.length();
         if (sLen < pLen) {
             return new ArrayList<Integer>();
         }
         List<Integer> ans = new ArrayList<Integer>();
-        int[] sCount = new int[26];
-        int[] pCount = new int[26];
-        //先分别初始化两个数组
+        int[] nums1 = new int[26];
+        int[] nums2 = new int[26];
         for (int i = 0; i < pLen; i++) {
-            sCount[s.charAt(i) - 'a']++;
-            pCount[p.charAt(i) - 'a']++;
+            nums1[p.charAt(i) - 'a']++;
+            nums2[s.charAt(i) - 'a']++;
         }
-        if (Arrays.equals(sCount, pCount)) {
+        if (Arrays.equals(nums1, nums2)) {
             ans.add(0);
         }
-
-        for (int left = 0; left < sLen - pLen; left++) {
-            sCount[s.charAt(left) - 'a']--;
-            int right = left + pLen;
-            sCount[s.charAt(right) - 'a']++;
-
-            if (Arrays.equals(sCount, pCount)) {
-                //上面left多减了一次，所以
-                ans.add(left + 1);
+        for (int i = pLen; i < sLen; i++) {
+            nums2[s.charAt(i) - 'a']++;
+            nums2[s.charAt(i - pLen) - 'a']--;
+            if (Arrays.equals(nums1, nums2)) {
+                ans.add(i - pLen + 1);
             }
         }
         return ans;

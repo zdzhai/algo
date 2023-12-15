@@ -7,6 +7,12 @@ public class FindMaxAverage {
         System.out.println(findMaxAverage(num, 4));
     }
 
+    /**
+     * 使用滑动窗口，固定窗口一直向前
+     * @param nums
+     * @param k
+     * @return
+     */
     public static double findMaxAverage(int[] nums, int k) {
         int len = nums.length;
         int widowSum = 0;

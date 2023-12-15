@@ -2,39 +2,39 @@ package com.yugutou.charpter16_slide.level2;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class LengthOfLongestSubstringTwoDistinct {
 
     public static void main(String[] args) {
-        String s = "eceba";
+        String s = "eccebbba";
         System.out.println(lengthOfLongestSubstringTwoDistinct(s));
     }
 
+    /**
+     * 问题1：如何判重
+     * 问题2：判重后如何更新left
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstringTwoDistinct(String s) {
 
         if (s.length() < 3) {
             return s.length();
         }
-        int left = 0, right = 0;
-        HashMap<Character, Integer> hashmap = new HashMap<>();
-        int maxLen = 2;
-
+        int left = 0, right = 1;
+        Map<Character, Integer> map = new HashMap<>();
+        int ans = 2;
+        map.put(s.charAt(left), left);
         while (right < s.length()) {
-
-            if (hashmap.size() < 3)
-                hashmap.put(s.charAt(right), right++);
-
-            // 如果大小达到了3个
-            if (hashmap.size() == 3) {
-                // 最左侧要删除的位置
-                int del_idx = Collections.min(hashmap.values());
-                hashmap.remove(s.charAt(del_idx));
-                // 窗口left的新位置
+            map.put(s.charAt(right), right++);
+            if (map.size() == 3) {
+                Integer del_idx = Collections.min(map.values());
+                map.remove(s.charAt(del_idx));
                 left = del_idx + 1;
             }
-
-            maxLen = Math.max(maxLen, right - left);
+            ans = Math.max(ans, right - left);
         }
-        return maxLen;
+        return ans;
     }
 }

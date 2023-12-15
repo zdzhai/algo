@@ -2,31 +2,47 @@ package com.yugutou.charpter16_slide.level2;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class LengthOfLongestSubstring {
     public static void main(String[] args) {
 
-        String s = "aabbbccdeebcss";
+        String s = "dvdf";
 //        String s = "au";
 //        String s = " ";
         System.out.println(lengthOfLongestSubstring(s));
 
     }
 
+    /**
+     * 问题1：如何判重
+     * 问题2：判重后如何移动left
+     * 使用滑动窗口定位区间
+     * 使用HashMap 做left更新
+     * 注意dvdf这种，第二次遇到d时，是把left移到v处，而不是d处
+     *
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstring(String s) {
-        if (s.length() == 0) return 0;
-        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
-        int max = 0;
-        int left = 0;
-        for (int right = 0; right < s.length(); right++) {
+        int n = s.length();
+        if (n == 0) {
+            return 0;
+        }
+        int left = 0, right = 1;
+        int ans = 1;
+        Map<Character, Integer> map = new HashMap<>();
+        map.put(s.charAt(left), left);
+        while (right < n) {
             if (map.containsKey(s.charAt(right))) {
-                left = Math.max(left, map.get(s.charAt(right))+1);
+                left = map.get(s.charAt(right))+ 1;
             }
             map.put(s.charAt(right), right);
-            max = Math.max(max, right - left + 1);
+            right++;
+            ans =Math.max(ans, right - left);
         }
-        return max;
+        return ans;
     }
 
     public static int lengthOfLongestSubstring2(String s) {
