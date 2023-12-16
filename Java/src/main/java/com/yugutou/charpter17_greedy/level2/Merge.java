@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Merge {
     public static void main(String[] args) {
         int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        System.out.println( merge(intervals));
+        System.out.println(Arrays.toString( merge(intervals)));
     }
 
     public static int[][] merge(int[][] intervals) {

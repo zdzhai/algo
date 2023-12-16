@@ -12,18 +12,17 @@ public class PartitionLabels {
 
     public static List<Integer> partitionLabels(String S) {
         List<Integer> list = new LinkedList<>();
-        int[] edge = new int[26];
         char[] chars = S.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            edge[chars[i] - 'a'] = i;
+        int[] edges = new int[26];
+        for (int i = 0; i < chars.length; i++){
+            edges[chars[i] - 'a'] = i;
         }
-        int idx = 0;
-        int last = -1;
+        int index = 0, pre = -1;
         for (int i = 0; i < chars.length; i++) {
-            idx = Math.max(idx, edge[chars[i] - 'a']);
-            if (i == idx) {
-                list.add(i - last);
-                last = i;
+            index = Math.max(index, edges[chars[i] - 'a']);
+            if (i == index) {
+                list.add(i - pre);
+                pre = i;
             }
         }
         return list;

@@ -1,6 +1,7 @@
 package com.yugutou.charpter17_greedy.level2;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class CanAttendMeetings {
     public static void main(String[] args) {
@@ -12,11 +13,10 @@ public class CanAttendMeetings {
     }
 
     public static boolean canAttendMeetings(int[][] intervals) {
-        // 将区间按照会议开始实现升序排序
-        Arrays.sort(intervals, (v1, v2) -> v1[0] - v2[0]);
-        // 遍历会议，如果下一个会议在前一个会议结束之前就开始了，返回 false。
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] < intervals[i - 1][1]) {
+        //按照会议开始时间排序
+        Arrays.sort(intervals, (a, b) ->  a[0] - b[0]);
+        for (int i = 0; i < intervals.length - 1; i++) {
+            if (intervals[i + 1][0] <= intervals[i][1]) {
                 return false;
             }
         }

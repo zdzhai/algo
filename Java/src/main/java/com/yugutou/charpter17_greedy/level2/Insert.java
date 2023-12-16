@@ -7,31 +7,38 @@ public class Insert {
         int[][] intervals = {{1, 3}, {6, 9}};
         int[] newInterval = {2, 5};
         int[][] result = insert(intervals, newInterval);
+        for (int[] nums : result) {
+            System.out.println(Arrays.toString(nums));
+        }
 
     }
 
+    /**
+     * 先把结尾处小于新增区间初始的加入到ans
+     * 对重复/新增区间做判断
+     * 把开始点大于上一节点后的节点加入到ans
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
     public static int[][] insert(int[][] intervals, int[] newInterval) {
-        int[][] res = new int[intervals.length + 1][2];
-        int idx = 0;
-        // 遍历区间列表：
-        // 首先将新区间左边且相离的区间加入结果集
+        int[][] ans = new int[intervals.length + 1][2];
+        int t = 0;
         int i = 0;
+        // 先把结尾处小于新增区间初始的加入到ans
         while (i < intervals.length && intervals[i][1] < newInterval[0]) {
-            res[idx++] = intervals[i++];
+            ans[t++] = intervals[i++];
         }
-        // 判断当前区间是否与新区间重叠，重叠的话就进行合并，直到遍历到当前区间在新区间的右边且相离，
-        // 将最终合并后的新区间加入结果集
+        // 对重复/新增区间做判断
         while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
             newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
-            newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
-            i++;
+            newInterval[1] = Math.max(intervals[i++][1], newInterval[1]);
         }
-        res[idx++] = newInterval;
-        // 最后将新区间右边且相离的区间加入结果集
-        while (i < intervals.length) {
-            res[idx++] = intervals[i++];
+        ans[t++] = newInterval;
+        // 把开始点大于上一节点后的节点加入到ans
+        while (i < intervals.length && intervals[i][0] > newInterval[1]) {
+            ans[t++] = intervals[i++];
         }
-
-        return Arrays.copyOf(res, idx);
+        return Arrays.copyOf(ans, t);
     }
 }

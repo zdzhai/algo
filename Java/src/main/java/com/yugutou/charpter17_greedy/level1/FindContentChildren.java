@@ -12,14 +12,21 @@ public class FindContentChildren {
         System.out.println(findContentChildren(g,s));
     }
 
+    /**
+     * g 胃口
+     * s 饼干尺寸
+     * @param g
+     * @param s
+     * @return
+     */
     public static int findContentChildren(int[] g, int[] s) {
         Arrays.sort(g);
         Arrays.sort(s);
         int count = 0;
         int start = s.length - 1;
         // 遍历孩子的胃口
-        for (int index = g.length - 1; index >= 0; index--) {
-            if (start >= 0 && g[index] <= s[start]) {
+        for (int i = g.length - 1; i >= 0; i--) {
+            if (start >= 0 && s[start] >= g[i]) {
                 start--;
                 count++;
             }
