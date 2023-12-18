@@ -6,23 +6,51 @@ package com.yugutou.charpter17_greedy.level3;
  */
 public class CanJump {
     public static void main(String[] args) {
-        int[] nums = {2, 3, 1, 1, 4};
+        int[] nums = {2,0,0};
         System.out.println(canJump(nums));
+        System.out.println(canJump2(nums));
     }
 
+    /**
+     *
+     * @param nums
+     * @return
+     */
     public static boolean canJump(int[] nums) {
         if (nums.length == 1) {
             return true;
         }
-        //覆盖范围, 初始覆盖范围应该是0，因为下面的迭代是从下标0开始的
         int cover = 0;
-        //在覆盖范围内更新最大的覆盖范围
         for (int i = 0; i <= cover; i++) {
-            cover = Math.max(cover, i + nums[i]);
+            cover = Math.max(cover, nums[i] + i);
             if (cover >= nums.length - 1) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * dp[i]表示到i时最大剩余步数
+     * if(dp[i - 1] > 0)
+     * dp[i] = max(dp[i-1] - 1 , nums[i] )
+     * @param nums
+     * @return
+     */
+    public static boolean canJump2(int[] nums) {
+        if (nums.length == 1) {
+            return true;
+        }
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            if( dp[i - 1] > 0 ) {
+                dp[i] = Math.max(dp[i - 1] - 1 , nums[i] );
+            } else {
+                return false;
+            }
+        }
+        return dp[n - 1] >= 0;
     }
 }

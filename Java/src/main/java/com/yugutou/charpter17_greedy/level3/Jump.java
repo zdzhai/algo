@@ -6,8 +6,9 @@ package com.yugutou.charpter17_greedy.level3;
  */
 public class Jump {
     public static void main(String[] args) {
-        int[] nums = {2, 3, 1, 1, 4};
+        int[] nums = {7,0,9,6,9,6,1,6,9,0,1,2,9,0,3};
         System.out.println(jump(nums));
+        System.out.println(jump2(nums));
     }
 
     public static int jump(int[] nums) {
@@ -27,5 +28,35 @@ public class Jump {
             }
         }
         return steps;
+    }
+
+    /**
+     * dp[i]表示能跳到此位置的最小跳跃次数
+     * if ( nums[i - 1] - i >= 0)
+     * dp[i] = min(dp[i - 1], 1);
+     * @param nums
+     * @return
+     */
+    public static int jump2(int[] nums) {
+        int n = nums.length;
+        if (n == 1) {
+            return 0;
+        }
+        int cover = 0;
+        int step = 0;
+        int max = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            //总共能跳的最远距离
+            max = Math.max(max, nums[i] + i);
+            //cover 更新能达到的最远距离
+            if (i == cover) {
+                cover = max;
+                step++;
+            }
+            if (cover >= n - 1) {
+                return step;
+            }
+        }
+        return step;
     }
 }
