@@ -29,9 +29,10 @@ public class BinaryTreePaths {
 
     private static void dfs(TreeNode root, List<Integer> temp) {
         //空节点返回
-        if (root == null) return;
+        if (root == null) {
+            return;
+        }
         temp.add(root.val);
-        //如果是叶子节点记录结果
         if (root.left == null && root.right == null) {
             ans.add(getPathString(temp));
         }

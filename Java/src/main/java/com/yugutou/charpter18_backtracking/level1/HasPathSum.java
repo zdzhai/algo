@@ -4,6 +4,7 @@ package com.yugutou.charpter18_backtracking.level1;
 import com.yugutou.tools.BinaryTree;
 import com.yugutou.tools.TreeNode;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class HasPathSum {
         path.offerLast(root.val);
         targetSum -= root.val;
         if (root.left == null && root.right == null && targetSum == 0) {
-            ret.add(new LinkedList<Integer>(path));
+            ret.add(new LinkedList<>(path));
         }
         dfs(root.left, targetSum);
         dfs(root.right, targetSum);
