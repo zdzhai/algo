@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LeetCode77
+ * LeetCode39
  */
 public class CombinationSum {
 
@@ -16,20 +16,21 @@ public class CombinationSum {
         return res;
     }
 
-    public void dfs(int[] c, int u, int target) {
+    public void dfs(int[] c, int startIndex, int target) {
         if (target < 0) {
             return;
         }
         if (target == 0) {
-            res.add(new ArrayList(path));
+            res.add(new ArrayList<>(path));
             return;
         }
-        for (int i = u; i < c.length; i++) {
+        for (int i = startIndex; i < c.length; i++) {
             if (c[i] <= target) {
                 path.add(c[i]);
-                //当前层将target减掉了一部分，也就是子结构只要找是否有满足(target -  c[i])就可以了
-                dfs(c, i, target - c[i]); // 因为可以重复使用，所以还是i
-                path.remove(path.size() - 1); //回溯
+                target -= c[i];
+                dfs(c, i, target);
+                target += path.get(path.size() - 1);
+                path.remove(path.size() -1);
             }
         }
     }

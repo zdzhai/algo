@@ -1,21 +1,21 @@
 package com.yugutou.charpter18_backtracking.level3;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * leetcode93
+ */
 public class RestoreIpAddresses {
 
-    static List<String> result = new ArrayList<>();
-
-    public static void main(String[] args) {
-        String s = "25525511135";
-
-        List<String> list = restoreIpAddresses(s);
-        System.out.println(list);
-    }
+    List<String> result = new ArrayList<>();
+    // 用来存放符合条件结果
+    Deque<String> deque = new LinkedList<>();
 
 
-    public static List<String> restoreIpAddresses(String s) {
+    public List<String> restoreIpAddresses(String s) {
         //这个是IP的特性决定的
         if (s.length() < 4 || s.length() > 12)
             return result;
@@ -24,28 +24,37 @@ public class RestoreIpAddresses {
     }
 
     // startIndex: 搜索的起始位置， pointNum:添加小数点的数量
-    private static void backTrack(String s, int startIndex, int pointNum) {
+    private void backTrack(String s, int startIndex, int pointNum) {
         if (pointNum == 3) {
             if (isValid(s, startIndex, s.length() - 1)) {
-                result.add(s);
+                deque.offerLast(s.substring(startIndex));
+                result.add(convertDequeToString(deque));
+                deque.removeLast();
             }
             return;
         }
         for (int i = startIndex; i < s.length(); i++) {
             if (isValid(s, startIndex, i)) {
-                s = s.substring(0, i + 1) + "." + s.substring(i + 1);
-                pointNum++;
-                backTrack(s, i + 2, pointNum);
-                pointNum--;// 撤销操作
-                s = s.substring(0, i + 1) + s.substring(i + 2);//撤销操作
+                deque.offerLast(s.substring( startIndex, i + 1));
+                backTrack(s, i + 1, pointNum + 1);
+                deque.removeLast();
             } else {
                 break;
             }
         }
     }
 
+    private String convertDequeToString(Deque<String> deque) {
+        String ans = "";
+        for (String str : deque) {
+            ans += str;
+            ans += ".";
+        }
+        return ans.substring(0, ans.length() - 1);
+    }
+
     // 判断字符串s在左闭⼜闭区间[start, end]所组成的数字是否合法
-    private static Boolean isValid(String s, int start, int end) {
+    private Boolean isValid(String s, int start, int end) {
         if (start > end) {
             return false;
         }
@@ -65,5 +74,13 @@ public class RestoreIpAddresses {
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        String s = "25525511135";
+
+        RestoreIpAddresses restoreIpAddresses = new RestoreIpAddresses();
+        List<String> list = restoreIpAddresses.restoreIpAddresses(s);
+        System.out.println(list);
     }
 }

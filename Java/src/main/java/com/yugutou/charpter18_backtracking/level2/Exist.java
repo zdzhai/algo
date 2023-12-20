@@ -1,5 +1,8 @@
 package com.yugutou.charpter18_backtracking.level2;
 
+/**
+ * leetcode79
+ */
 class Exist {
     public boolean exist(char[][] board, String word) {
         int h = board.length, w = board[0].length;
@@ -15,29 +18,30 @@ class Exist {
         return false;
     }
 
-    public boolean check(char[][] board, boolean[][] visited, int i, int j, String s, int k) {
-        if (board[i][j] != s.charAt(k)) {
+    public boolean check(char[][] board,
+                         boolean[][] visited,
+                         int i,
+                         int j,
+                         String s,
+                         int startIndex) {
+        //边界条件
+        if (i >= board.length || i < 0 || j >= board[0].length || j < 0 || visited[i][j]) {
             return false;
-        } else if (k == s.length() - 1) {
+        }
+        if (board[i][j] != s.charAt(startIndex)) {
+            return false;
+        }
+        //结束条件
+        if (startIndex == s.length() - 1) {
             return true;
         }
         visited[i][j] = true;
-        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        boolean result = false;
-        for (int[] dir : directions) {
-            int newi = i + dir[0], newj = j + dir[1];
-            if (newi >= 0 && newi < board.length && newj >= 0 && newj < board[0].length) {
-                if (!visited[newi][newj]) {
-                    boolean flag = check(board, visited, newi, newj, s, k + 1);
-                    if (flag) {
-                        result = true;
-                        break;
-                    }
-                }
-            }
-        }
+        boolean res = check(board, visited, i, j + 1, s, startIndex + 1) ||
+                check(board, visited, i + 1, j, s, startIndex + 1) ||
+                check(board, visited, i, j - 1, s, startIndex + 1) ||
+                check(board, visited, i - 1, j, s, startIndex + 1);
         visited[i][j] = false;
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {

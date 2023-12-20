@@ -1,8 +1,12 @@
 package com.yugutou.charpter18_backtracking.level2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * leetcode784
+ */
 class LetterCasePermutation {
     List<String> res = new ArrayList<>();
 
@@ -15,23 +19,25 @@ class LetterCasePermutation {
 
     /**
      * @param cs  搜索的字符数组
-     * @param idx 开始搜索的位置
+     * @param startIndex 开始搜索的位置
      */
-    void dfs(char[] cs, int idx) {
+    void dfs(char[] cs, int startIndex) {
         res.add(String.valueOf(cs));
-        for (int i = idx; i < cs.length; i++) {
-            // 如果是数字就跳过
-            if (isDigit(cs[i]))
+        for (int i = startIndex; i < cs.length; i++) {
+            if (isDigit(cs[i])) {
                 continue;
-            // 大小写反转
+            }
             cs[i] = changeLetter(cs[i]);
             dfs(cs, i + 1);
-            // 回溯, 大小写反转回来
             cs[i] = changeLetter(cs[i]);
         }
     }
 
     //反转大小写
+    //32 =      0010 0000
+    //a = 97 =  0110 0001
+    //a ^= 32   0100 0001 = 65 = A
+    //减32 就是把二进制的第6位变为0，加32 就是把二进制的第6位变为1
     public char changeLetter(char c) {
         return (c >= 'a' && c <= 'z') ? (char) (c - 32) : (char) (c + 32);
     }

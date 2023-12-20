@@ -5,6 +5,9 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * leetcode131
+ */
 public class Partition {
     List<List<String>> lists = new ArrayList<>();
     Deque<String> deque = new LinkedList<>();
@@ -17,20 +20,17 @@ public class Partition {
     private void backTracking(String s, int startIndex) {
         //如果起始位置大于s的大小，说明找到了一组分割方案
         if (startIndex >= s.length()) {
-            lists.add(new ArrayList(deque));
+            lists.add(new LinkedList<>(deque));
             return;
         }
         for (int i = startIndex; i < s.length(); i++) {
-            //如果是回文子串，则记录
             if (isPalindrome(s, startIndex, i)) {
-                String str = s.substring(startIndex, i + 1);
-                deque.addLast(str);
+                deque.addLast(s.substring(startIndex, i + 1));
             } else {
                 continue;
             }
-            //起始位置后移，保证不重复
             backTracking(s, i + 1);
-            deque.removeLast();
+            deque.pollLast();
         }
     }
 
@@ -47,7 +47,7 @@ public class Partition {
     public static void main(String[] args) {
         Partition partition = new Partition();
 
-        String s = "aab";
+        String s = "aba";
 
         System.out.println(partition.partition(s));
 
