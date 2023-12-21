@@ -16,24 +16,26 @@ public class MinPathSum {
 
     /**
      * 基于二维数组减少重复计算
-     *
+     * dp[i][j]表示到达i,j位置最小总和
+     * dp[i][j] = Math.min(dp[i -1][j],dp[i][j - 1]) + grid[i][j];
      * @param grid
      * @return
      */
     public static int minPathSum(int[][] grid) {
         int m = grid.length, n = grid[0].length;
-        int[][] f = new int[m][n];
+        int[][] dp = new int[m][n];
+        dp[0][0] = grid[0][0];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (i == 0 && j == 0) {
-                    f[i][j] = grid[i][j];
-                } else {
-                    int top = i - 1 >= 0 ? f[i - 1][j] + grid[i][j] : Integer.MAX_VALUE;
-                    int left = j - 1 >= 0 ? f[i][j - 1] + grid[i][j] : Integer.MAX_VALUE;
-                    f[i][j] = Math.min(top, left);
+                if (i > 0 && j > 0) {
+                    dp[i][j] = Math.min(dp[i -1][j],dp[i][j - 1]) + grid[i][j];
+                } else if (i > 0) {
+                    dp[i][j] = dp[i - 1][j] + grid[i][j];
+                } else if (j > 0){
+                    dp[i][j] = dp[i][j - 1] + grid[i][j];
                 }
             }
         }
-        return f[m - 1][n - 1];
+        return dp[m - 1][n - 1];
     }
 }
