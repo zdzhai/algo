@@ -7,21 +7,24 @@ public class CanJump {
         System.out.println(canJump(nums));
     }
 
-    public static boolean canJump(int[] A) {
-        if (A == null || A.length == 0) {
-            return false;
-        }
-        int n = A.length;
-        boolean[] f = new boolean[n];
-        f[0] = true;
-        for (int j = 1; j < n; j++) {
-            f[j] = false;
-            for (int i = 0; i < j; i++) {
-                if (f[i] && (i + A[i] >= j)) {
-                    f[j] = true;
-                }
+    /**
+     * dp[i]表示到达i后的剩余最大距离
+     * if(dp[i - 1]) > 0
+     * dp[i] = max(dp[i - 1] - 1 , nums[i]);
+     * @param nums
+     * @return
+     */
+    public static boolean canJump(int[] nums) {
+        int n =nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            if (dp[i - 1] > 0) {
+                dp[i] = Math.max( dp[i - 1] - 1, nums[i]);
+            } else {
+                return false;
             }
         }
-        return f[n - 1];
+        return dp[n - 1] >= 0;
     }
 }
