@@ -11,14 +11,19 @@ import java.util.List;
  */
 public class MinCut {
     public static void main(String[] args) {
-        String s = "aaaa";
+        String s = "aab";
         System.out.println(minCut2(s));
+        dfs(s, 0);
+        Collections.sort(ans, (list1,list2) -> list1.size() - list2.size());
+        System.out.println(ans.get(0).size() - 1);
+        System.out.println(minCut(s));
     }
 
     /**
      * 每个回文串尽可能长
      * dp[]表示长度为i的字符串被划分为回文串的最小个数
      * dp[i] =  0-j的最小个数+1，但条件是i-j是回文串
+     * 所以需要先求出isPalin[i][j]
      * @param s
      * @return
      */
@@ -27,14 +32,38 @@ public class MinCut {
         if (n == 1) {
             return 0;
         }
-        int[] dp = new int[n];
-        dp[0] = 0;
-        for (int j = 0; j < n; j++) {
-            for (int i = 0; i <= j; i++) {
 
+        boolean[][] isPalin = new boolean[n][n];
+        char[] chars = s.toCharArray();
+        int i, j;
+        for (int t = 0; t < n; t++) {
+            //奇数长度
+            i = j = t;
+            while (i >= 0 && j < n && chars[i] == chars[j]) {
+                isPalin[i][j] = true;
+                i--;
+                j++;
+            }
+            //偶数长度
+            i = t;
+            j = t + 1;
+            while (i >= 0 && j < n && chars[i] == chars[j]) {
+                isPalin[i][j] = true;
+                i--;
+                j++;
             }
         }
-        return 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        for (j = 1; j <= n; j++) {
+            dp[j] = Integer.MAX_VALUE;
+            for (i = 0; i < j; i++) {
+                if (isPalin[i][j - 1]) {
+                    dp[j] = Math.min(dp[j], dp[i] + 1);
+                }
+            }
+        }
+        return dp[n] - 1;
     }
 
     /**

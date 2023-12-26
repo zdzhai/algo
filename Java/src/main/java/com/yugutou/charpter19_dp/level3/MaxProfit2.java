@@ -30,4 +30,6 @@ public class MaxProfit2 {
         }
         return ans;
     }
+
+
 }
