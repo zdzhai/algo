@@ -1,4 +1,4 @@
-package com.yugutou.charpter5_queue_map.level1;
+package com.yugutou.charpter5_queue_hash.level1;
 
 public class LinkQueue {
     private Node front;

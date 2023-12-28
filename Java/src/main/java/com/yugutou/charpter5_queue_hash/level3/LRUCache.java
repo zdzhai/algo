@@ -1,4 +1,4 @@
-package com.yugutou.charpter5_queue_map.level3;
+package com.yugutou.charpter5_queue_hash.level3;
 
 import java.util.HashMap;
 import java.util.Map;

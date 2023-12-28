@@ -1,4 +1,4 @@
-package com.yugutou.charpter5_queue_map.level2;
+package com.yugutou.charpter5_queue_hash.level2;
 
 import java.util.Stack;
 

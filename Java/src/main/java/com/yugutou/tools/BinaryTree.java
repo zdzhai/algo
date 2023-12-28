@@ -11,7 +11,7 @@ public class BinaryTree {
     /**
      * 方法1：比较粗糙的创建二叉树关系
      */
-    public TreeNode buildBinaryTree() {
+    public static TreeNode buildBinaryTree() {
         TreeNode node = new TreeNode(3);
         node.left = new TreeNode(9);
         node.right = new TreeNode(20);
@@ -65,7 +65,7 @@ public class BinaryTree {
     /**
      * 建立搜索树
      */
-    public TreeNode buildBSTTree() {
+    public static TreeNode buildBSTTree() {
         TreeNode node = new TreeNode(4);
         node.left = new TreeNode(2);
         node.right = new TreeNode(7);
