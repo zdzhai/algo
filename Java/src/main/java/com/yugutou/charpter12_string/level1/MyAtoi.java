@@ -3,7 +3,7 @@ package com.yugutou.charpter12_string.level1;
 public class MyAtoi {
     public static void main(String[] args) {
 
-        String str = "-2147483648";
+        String str = "-2147483649";
         int res = myAtoi(str);
         System.out.println(res);
 
@@ -15,52 +15,41 @@ public class MyAtoi {
         int n = str.length();
         char[] charArray = str.toCharArray();
 
-        // 1、去除前导空格
         int index = 0;
+        //去除前导空格
         while (index < n && charArray[index] == ' ') {
             index++;
         }
-
-        // 2、如果已经遍历完成（针对极端用例 "      "）
         if (index == n) {
             return 0;
         }
-
-        // 3、如果出现符号字符，仅第 1 个有效，并记录正负
         int sign = 1;
-        char firstChar = charArray[index];
-        if (firstChar == '+') {
+        if (charArray[index] == '+') {
             index++;
-        } else if (firstChar == '-') {
+        } else if (charArray[index] == '-') {
             index++;
             sign = -1;
         }
 
-        // 4、将后续出现的数字字符进行转换
-        // 不能使用 long 类型，这是题目说的
         int res = 0;
         while (index < n) {
-            char currChar = charArray[index];
-            // 4.1 先判断不合法的情况
-            if (currChar > '9' || currChar < '0') {
+            if (charArray[index] > '9' || charArray[index] < '0') {
                 break;
             }
 
-            // 题目中说只能存储 32 位大小的有符号整数，下面两个if分别处理整数和负数的情况。
-            // 提前判断乘以10以后是否越界,但res*10可能会越界，所以这里使用Integer.MAX_VALUE/10，这样一定不会越界。
-            // 这是解决溢出问题的经典处理方式
-            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && (currChar - '0') > Integer.MAX_VALUE % 10)) {
+            //判断数字是否越界
+            if (res > Integer.MAX_VALUE / 10
+                    || (res == Integer.MAX_VALUE / 10 && (charArray[index] - '0') > (Integer.MAX_VALUE % 10))) {
                 return Integer.MAX_VALUE;
             }
-            if (res < Integer.MIN_VALUE / 10 || (res == Integer.MIN_VALUE / 10 && (currChar - '0') > -(Integer.MIN_VALUE % 10))) {
+            else if (res < Integer.MIN_VALUE / 10
+                    || (res == Integer.MIN_VALUE / 10 && (charArray[index] - '0') > -(Integer.MIN_VALUE % 10))) {
                 return Integer.MIN_VALUE;
             }
-
-            // 合法的情况下，才考虑转换，每一步都把符号位乘进去
-            // 想想这里为什么要带着sign乘
-            res = res * 10 + sign * (currChar - '0');
+            res = res * 10 + sign * (charArray[index] - '0');
             index++;
         }
+
         return res;
     }
 }

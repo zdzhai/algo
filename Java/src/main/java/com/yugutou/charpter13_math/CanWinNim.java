@@ -10,12 +10,11 @@ public class CanWinNim {
     }
 
     /**
-     *
+     * 如果是4的倍数，那自己一定输
      * @param n
      * @return
      */
     public static boolean canWinNim(int n) {
-
-        return false;
+        return n % 4 != 0;
     }
 }
