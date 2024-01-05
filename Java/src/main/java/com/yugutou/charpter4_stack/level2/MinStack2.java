@@ -18,8 +18,9 @@ public class MinStack2 {
     }
 
     public void push(int val) {
+        int min = minStack.isEmpty() ? val : minStack.peek();
+        minStack.push(Math.min(min, val));
         stack.push(val);
-        minStack.push(Math.min(minStack.peek(), val));
     }
 
     public void pop() {

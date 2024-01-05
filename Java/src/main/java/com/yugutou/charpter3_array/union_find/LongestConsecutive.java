@@ -1,19 +1,38 @@
-package com.yugutou.charpter3_array;
+package com.yugutou.charpter3_array.union_find;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * leetcode 128.最长连续序列
  * @author dongdong
  * @Date 2024/1/3 21:07
  */
 public class LongestConsecutive {
     public static void main(String[] args) {
-
+        int[] nums = {100,4,200,1,3,2};
+        int i = longestConsecutive(nums);
+        System.out.println(i);
     }
 
-    public int longestConsecutive(int[] nums) {
-        return 0;
+    public static int longestConsecutive(int[] nums) {
+        UnionFind unionFind = new UnionFind(nums);
+        int ans = 0;
+        //更新每个元素的右边界
+        for (int num : nums) {
+            //看num+1是否存在，存在则设置num的右边界为num+1的右边界
+            if (unionFind.find(num + 1) != null) {
+                unionFind.union(num, num + 1);
+            }
+        }
+
+        //看每个元素的最大有边界
+        for (int num : nums) {
+            Integer right = unionFind.find(num);
+            ans = Math.max(ans, right - num + 1);
+        }
+
+        return ans;
     }
 }
 
@@ -32,11 +51,9 @@ class UnionFind {
     // 寻找x的父节点，实际上也就是x的最远连续右边界，这点类似于方法2
     //查找x的右边界
     public Integer find(int x) {
-        // nums不包含x
         if (!parent.containsKey(x)) {
             return null;
         }
-        // 遍历找到x的父节点
         while (x != parent.get(x)) {
             // 进行路径压缩，不写下面这行也可以，但是时间会慢些
             parent.put(x, parent.get(parent.get(x)));
@@ -53,32 +70,5 @@ class UnionFind {
             return;
         }
         parent.put(rootX, rootY);
-    }
-}
-
-class Solution {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] nums = {100,4,200,1,3,2};
-        int i = solution.longestConsecutive(nums);
-        System.out.println(i);
-    }
-    public int longestConsecutive(int[] nums) {
-        UnionFind uf = new UnionFind(nums);
-        int ans = 0;
-
-        for (int num : nums) {
-            // 当num+1存在，将num合并到num+1所在集合中
-            if (uf.find(num + 1) != null) {
-                uf.union(num, num + 1);
-            }
-        }
-
-        for (int num : nums) {
-            // 找到num的最远连续右边界
-            int right = uf.find(num);
-            ans = Math.max(ans, right - num + 1);
-        }
-        return ans;
     }
 }
