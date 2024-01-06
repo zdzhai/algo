@@ -1,5 +1,8 @@
 package com.yugutou.charpter11_bit.level2;
 
+/**
+ * leetcode 2980. 检查按位或是否存在尾随零
+ */
 class Solution {
     public static void main(String[] args) {
         int[] nums = {2,2};

@@ -1,6 +1,7 @@
 package com.yugutou.charpter3_array.union_find;
 
 /**
+ * leetcode 990. 等式方程的可满足性
  * @author dongdong
  * @Date 2024/1/4 22:59
  */
