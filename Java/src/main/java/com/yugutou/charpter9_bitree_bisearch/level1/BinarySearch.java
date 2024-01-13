@@ -20,6 +20,46 @@ public class BinarySearch {
     }
 
     /**
+     * 模板1 更新右边界，判断范围为[left, mid - 1]和[mid, right]
+     * 需要注意计算mid要多加1
+     * @param array
+     * @param target
+     * @return
+     */
+    public static int binarySearch3(int[] array, int target) {
+        int size = array.length;
+        int left = 0, right = size - 1;
+        while (left < right) {
+            int mid = left + 1 + ((right - left) >> 1);
+            if (array[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        return array[left] == target ? left : -1;
+    }
+
+    /**
+     * 模板2 更新左边界，判断范围为[mid + 1, right]和[left, mid]
+     * @param array
+     * @param target
+     * @return
+     */
+    public static int binarySearch4(int[] array, int target) {
+        int size = array.length;
+        int left = 0, right = size - 1;
+        while (left < right) {
+            int mid = left + ((right - left) >> 1);
+            if (array[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return array[left] == target ? left : -1;
+    }
+    /**
      * 循环实现二分查找
      *
      * @param array
@@ -66,4 +106,5 @@ public class BinarySearch {
         }
         return -1;
     }
+
 }

@@ -32,6 +32,9 @@ public class Divide {
         divisor = Math.abs(divisor);
 
         int ans = 0;
+        //5 / 2
+        // 101  10
+        // ans += 2
         for (int i = 31; i >= 0; i--) {
             if ((dividend >> i) >= divisor) {
                 ans += (1 << i);
