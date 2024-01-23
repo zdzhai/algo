@@ -1,4 +1,4 @@
-package com.yugutou.charpter19_dp.level2;
+package com.yugutou.charpter19_dp;
 
 import java.util.Arrays;
 
@@ -47,6 +47,7 @@ public class LengthOfLIS {
 
     /**
      * 使用贪心+二分查找优化
+     *
      * @param nums
      * @return
      */
@@ -57,7 +58,7 @@ public class LengthOfLIS {
         Arrays.fill(f, 0x3f3f3f3f);
         for (int i = 0; i < n; i++) {
             int t = nums[i];
-            //为了找出小于nums[i]的最大下标，
+            //为了找出小于nums[i]的最大值，
             //在dp的解法中，是遍历O(N)，找到小于nums[i]的最大下标
             int l = 1, r = i + 1;
             while (l < r) {

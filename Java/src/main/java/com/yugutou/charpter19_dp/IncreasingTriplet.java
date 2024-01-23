@@ -16,6 +16,7 @@ public class IncreasingTriplet {
 
     /**
      * 最长递增子序列
+     * 从数据规模看智能O(n)/O(nlogn) 所以O(n2一定超时)
      * @param nums
      * @return
      */

@@ -72,4 +72,49 @@ public class Divide {
         }
         return ans;
     }
+
+    /**
+     * 商的最小值是0，最大值就是dividend
+     * 所以可以二分查找 mid
+     * 如果dividend * mid > dividend mid必须得减小
+     * 如果dividend * mid <= dividend mid增大
+     * @param dividend
+     * @param divisor
+     * @return
+     */
+    public static int divide3(int dividend, int divisor) {
+        long x = dividend, y = divisor;
+        int sign = (x ^ y) < 0 ? 1 : -1;
+        x = x < 0 ? -x : x;
+        y = y < 0 ? -y : y;
+        long l = 0, r = x;
+        long ans = 0;
+        while (l < r) {
+            long mid = l + 1 + ((r - l) >> 1);
+            if (mult(mid, y) > x) {
+                r = mid - 1;
+            } else {
+                l = mid;
+            }
+        }
+        ans = sign > 0 ? l : -l;
+        if (ans >  Integer.MAX_VALUE || ans < Integer.MIN_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+        return (int)ans;
+    }
+
+    private static long mult(long mid, long y) {
+        long ans = 0;
+        while (y > 0) {
+            if ((y & 1) == 1) {
+                ans += mid;
+            }
+            y >>= 1;
+            mid += mid;
+        }
+        return ans;
+    }
+
+
 }

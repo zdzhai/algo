@@ -41,4 +41,41 @@ public class SearchRange {
         ans[1] = nums[left] == target ? left : -1;
         return ans;
     }
+
+
+    public static int[] searchRange2(int[] nums, int target) {
+        int n = nums.length;
+        int[] ans = new int[2];
+        ans[0] = -1; ans[1] = -1;
+        if (n == 0) return ans;
+        int l = 0, r = n - 1;
+
+        //查找大于等于target的第一个元素
+        while (l < r) {
+            int mid = l + ((r - l) >> 1);
+            //当nums[mid]大于等于target
+            // nums[mid] < target，左边界增加
+            if (nums[mid] < target) {
+                l = mid + 1;
+            } else {
+                r = mid;
+            }
+        }
+        ans[0] = nums[r] == target ? r : -1;
+
+        l = 0; r = n - 1;
+        //查找小于等于target的最后一个元素
+        while (l < r) {
+            int mid = l + 1 + ((r - l) >> 1);
+            //当nums[mid]小于等于target
+            // nums[mid] > target，右边界减小
+            if (nums[mid] > target) {
+                r = mid - 1;
+            } else {
+                l = mid;
+            }
+        }
+        ans[1] = nums[r] == target ? r : -1;
+        return ans;
+    }
 }

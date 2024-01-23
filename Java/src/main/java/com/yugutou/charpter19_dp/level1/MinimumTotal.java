@@ -19,6 +19,7 @@ public class MinimumTotal {
         list.add(Arrays.asList(4, 1, 8, 3));
 
         System.out.println(minimumTotal(list));
+        System.out.println(minimumTotal2(list));
     }
 
 
@@ -49,5 +50,32 @@ public class MinimumTotal {
         return ans;
     }
 
+    /**
+     * 使用动态数组压缩空间
+     * @param tri
+     * @return
+     */
+    public static int minimumTotal2(List<List<Integer>> tri) {
+        int n = tri.size();
+        int ans = Integer.MAX_VALUE;
+        int[][] dp = new int[2][n];
+        dp[0][0] = tri.get(0).get(0);
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i + 1; j++) {
+                dp[i & 1][j] = Integer.MAX_VALUE;
+                int val = tri.get(i).get(j);
+                if (j != 0) {
+                    dp[i & 1][j] = Math.min(dp[i & 1][j], dp[(i - 1) & 1][j - 1] + val);
+                }
+                if (j != i) {
+                    dp[i & 1][j] = Math.min(dp[i & 1][j], dp[(i - 1) & 1][j] + val);
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            ans = Math.min(ans, dp[(n - 1) & 1][i]);
+        }
+        return ans;
+    }
 
 }

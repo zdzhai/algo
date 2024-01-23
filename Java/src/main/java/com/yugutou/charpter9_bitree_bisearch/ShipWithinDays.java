@@ -16,6 +16,7 @@ public class ShipWithinDays {
      * 每天的最低运载能力肯定得大于等于 tot / days 小于等于tot
      * check()得条件变复杂了
      * 需要检验在此运载能力下，需要多少天，然后和days对比
+     * 时间复杂度O(nlog(sum))
      * @param weights
      * @param days
      * @return
