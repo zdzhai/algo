@@ -1,5 +1,7 @@
 package com.yugutou.charpter9_bitree_bisearch;
 
+import java.util.Arrays;
+
 /**
  * leetcode 4.寻找两个正序数组的中位数
  * @author dongdong
@@ -19,8 +21,17 @@ public class FindMedianSortedArrays {
      */
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length, n = nums2.length;
-        int k = (m + n) / 2;
-        int l = 0;
-        return 0.0;
+        int k = m + n;
+        int[] a = new int[k];
+        int idx = 0;
+        for (int i : nums1) {
+            a[idx++] = i;
+        }
+        for (int i : nums2) {
+            a[idx++] = i;
+        }
+        Arrays.sort(a);
+        int l = a[k / 2], r = a[(k - 1) / 2];
+        return (l + r) / 2.0;
     }
 }

@@ -1,9 +1,7 @@
 package com.yugutou.charpter16_slide.level2;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class LengthOfLongestSubstring {
     public static void main(String[] args) {
@@ -27,46 +25,44 @@ public class LengthOfLongestSubstring {
      */
     public static int lengthOfLongestSubstring(String s) {
         int n = s.length();
-        if (n == 0) {
-            return 0;
-        }
-        int left = 0, right = 1;
-        int ans = 1;
+        if (n == 1) return 1;
         Map<Character, Integer> map = new HashMap<>();
-        map.put(s.charAt(left), left);
-        while (right < n) {
-            if (map.containsKey(s.charAt(right))) {
-                left = map.get(s.charAt(right))+ 1;
+        int l = 0, r = 1;
+        int ans = 0;
+        map.put(s.charAt(l), l);
+        while (r < n) {
+            if (map.containsKey(s.charAt(r))) {
+                l = Math.max(l,map.get(s.charAt(r)) + 1);
             }
-            map.put(s.charAt(right), right);
-            right++;
-            ans =Math.max(ans, right - left);
+            map.put(s.charAt(r), r);
+            ans = Math.max(ans, r - l + 1);
+            r++;
         }
         return ans;
     }
 
     public static int lengthOfLongestSubstring2(String s) {
-        if (s.length() <= 1) {
-            return s.length();
+        int n = s.length();
+        if (n <= 1) {
+            return n;
         }
-        // 集合中的元素一定不重复，适合记录窗口内每个字符是否出现过，
-        Set<Character> set = new HashSet<Character>();
-        // 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
-        int right = -1, max = 0;
-        for (int left = 0; left < s.length(); left++) {
-            // 左指针向右移动时移除前一个位置的字符，因此要排除left=0的情况
-            if (left != 0) {
-                set.remove(s.charAt(left - 1));
+        int l = 0,r = 0;
+        //保存字符及其出现的次数
+        Map<Character, Integer> map = new HashMap<>();
+        int ans = 1;
+        while (r < n) {
+            char j = s.charAt(r);
+            map.put(j, map.getOrDefault(j, 0) + 1);
+            //存在r重复，要把l移动到使重复字符只剩下一个的字符后边
+            while (map.get(s.charAt(r)) > 1) {
+                char i = s.charAt(l);
+                map.put(i, map.get(i) - 1);
+                l++;
             }
-            while (right + 1 < s.length() && !set.contains(s.charAt(right + 1))) {
-                // 不断地移动右指针
-                set.add(s.charAt(right + 1));
-                right++;
-            }
-            max = Math.max(max, right - left + 1);
+            ans = Math.max(ans, r - l + 1);
+            r++;
         }
-        return max;
-
+        return ans;
     }
 
 
