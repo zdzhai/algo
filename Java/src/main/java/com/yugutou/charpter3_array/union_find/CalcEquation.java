@@ -1,7 +1,7 @@
 package com.yugutou.charpter3_array.union_find;
 
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * leetcode 399. 除法求值
@@ -14,8 +14,7 @@ public class CalcEquation {
     }
 
     /**
-     * 带权有向图
-     * 先判断两个量是否是联通的
+     * 使用并查集
      *
      * @param equations
      * @param values
@@ -25,12 +24,7 @@ public class CalcEquation {
     public double[] calcEquation(List<List<String>> equations,
                                  double[] values,
                                  List<List<String>> queries) {
-        Union union = new Union(equations);
 
-        for (List<String> equation : equations) {
-            //判断该组元素是否存在，是否联通
-
-        }
         return null;
     }
 }

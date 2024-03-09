@@ -4,6 +4,7 @@ import com.yugutou.tools.BinaryTree;
 import com.yugutou.tools.TreeNode;
 
 /**
+ * leetcode 235.二叉搜索树的最近公共祖先
  * @author dongdong
  * @Date 2024/1/2 14:31
  */
@@ -51,12 +52,11 @@ public class LowestCommonAncestor {
      * @return
      */
     public static TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || p == null || q == null) {
-            return null;
-        }
+        if (root == null || p == null || q == null) return null;
         if (root.val < p.val && root.val < q.val) {
             return lowestCommonAncestor2(root.right, p, q);
-        } else if (root.val > p.val && root.val > q.val) {
+        }
+        else if (root.val > p.val && root.val > q.val) {
             return lowestCommonAncestor2(root.left, p, q);
         }
         return root;
