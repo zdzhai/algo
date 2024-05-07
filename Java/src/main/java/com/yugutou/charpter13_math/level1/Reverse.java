@@ -1,11 +1,15 @@
 package com.yugutou.charpter13_math.level1;
 
+/**
+ * leetcode 7. 正数翻转
+ * @author dongdong
+ */
 public class Reverse {
     public static void main(String[] args) {
         System.out.println(Integer.MAX_VALUE);
         System.out.println(Math.pow(2,31)-1);
         //System.out.println(2^30 - 1);
-        System.out.println(reverse(432));
+        System.out.println(reverse2(432));
     }
     public static int reverse(int x) {
         int res = 0;
@@ -23,5 +27,14 @@ public class Reverse {
             x /= 10;
         }
         return res;
+    }
+
+    public static int reverse2(int x) {
+        long ans = 0;
+        while (x != 0) {
+            ans = ans * 10 + x % 10;
+            x /= 10;
+        }
+        return (int)ans == ans ? (int)ans : 0;
     }
 }

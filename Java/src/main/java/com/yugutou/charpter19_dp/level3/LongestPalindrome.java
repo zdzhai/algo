@@ -1,12 +1,14 @@
 package com.yugutou.charpter19_dp.level3;
 
 /**
+ * leetcode 5.  最长回文子串
  * @author dongdong
  * @Date 2023/12/23 18:33
  */
 public class LongestPalindrome {
     public static void main(String[] args) {
-        String s = "aaaa";
+        String s = "babaac";
+        System.out.println(longestPalindrome(s));
         System.out.println(longestPalindrome3(s));
     }
 
@@ -17,7 +19,30 @@ public class LongestPalindrome {
      * @return
      */
     public static String longestPalindrome(String s) {
-        return s;
+        int size = s.length();
+        String ans = "";
+        for (int i = 0; i < size; i++) {
+            //回文串为奇数个
+            int l = i - 1;
+            int r = i + 1;
+            String sub = subString(s, l, r);
+            if (sub.length() > ans.length()) ans = sub;
+
+            //回文串为偶数个
+            l = i - 1;
+            r = i + 1 - 1;
+            sub = subString(s, l, r);
+            if (sub.length() > ans.length()) ans = sub;
+        }
+        return ans;
+    }
+
+    static String subString(String s, int l, int r) {
+        while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
+            l--;
+            r++;
+        }
+        return s.substring(l + 1, r);
     }
 
     /**
