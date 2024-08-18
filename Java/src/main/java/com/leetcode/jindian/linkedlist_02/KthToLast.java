@@ -1,4 +1,4 @@
-package com.leetcode.jindian;
+package com.leetcode.jindian.linkedlist_02;
 
 import com.yugutou.charpter1_linklist.level1.ListNode;
 

@@ -1,4 +1,4 @@
-package com.leetcode.jindian;
+package com.leetcode.jindian.string_01;
 
 /**
  * @author dongdong
